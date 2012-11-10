@@ -8,9 +8,18 @@ ID  STEP ID   ACTION	                                                        RES
 
 
 
+27   1       Sprawdzamy czy postawiony pionek zagraza                     Pionek zagraza królowi przeciwnika
+             królowi przeciwnika(czy istnieje Mat)
+     2       Sprawdzamy czy postawiony pionek zagraza                     Pionek nie zagraża królowi
+             królowi przeciwnika(czy istnieje Mat)
+     3       Sprawdzam pola obok króla czy można przesunąć                Sprawdzone pola obok króla
+             króla na inne pole                                       
+     4       Istnieje pole na które mozna przesunąć pionek                Zablokowanie ruchów gracza i odblokowanie ruchów przeciwnika
+     5       Nie istnieje pole na które mozna przesunąć pionek            Koniec gry 
+28   1       
 
-
-
+32   1       Jeśli jest tylko król to przekaz graczowi                    
+             informacje że wygrał i zakończ gre
 
 33   1       Zablokowanie ruchu drugiego gracza i                          Gracz pierwszy wykonuje ruch
              uruchomienie ruchów pierwszego gracza           
