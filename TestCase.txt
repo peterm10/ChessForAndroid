@@ -36,5 +36,9 @@ ID  STEP ID   ACTION	                                                        RES
 34   1       Zapis ruchu gracza drugirgo                                    Zablokowanie ruchów gracza i odblokowanie ruchów dla gracza pierwszego
      2       Zapis powiekszonego licznika drugirgo gracza                   Zablokowanie ruchów gracza i odblokowanie ruchów dla gracza pierwszego
     
-
+35   1      Wykonuj petle do otzymania sygnału                            Uzyskanie sygnału
+            koniec gry, zakonczenie gry przez gracza,
+            w przypadku zwyciestwa lub liczbia pionków
+            jest zbyt mała by kontynłoać gre
+     2      Inf.o koncu gry                                              Koniec gry
 
