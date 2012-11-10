@@ -25,12 +25,10 @@ ID  STEP ID   ACTION	                                                        RES
 
 31   1       Sprawdz liczbe pionków przeciwnika                           Sprawdzam liczbe pinków
      2       Liczba pionków jest wieksza niż jeden                        kontynłuj gre dalej
-     3       Pozostał tylko król                                          Wyświetlone okienko z Informacja że gracz wygrał i inf. czy rozpocząć nową, czy koniec gry
-     4       Wybór opcji nowa gra                                         rozpoczecie nowej gry
-     5       Wybór opcji koniec gry                                       Zakończenie gry
-
-32   1       Jeśli jest tylko król to przekaz graczowi                    
-             informacje że wygrał i zakończ gre
+     
+32   1       Pozostał tylko król                                          Wyświetlone okienko z Informacja że gracz wygrał i inf. czy rozpocząć nową, czy koniec gry
+     2       Wybór opcji nowa gra                                         rozpoczecie nowej gry
+     3       Wybór opcji koniec gry                                       Zakończenie gry
 
 33   1       Zablokowanie ruchu drugiego gracza i                          Gracz pierwszy wykonuje ruch
              uruchomienie ruchów pierwszego gracza           
