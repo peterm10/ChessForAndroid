@@ -1,8 +1,21 @@
-ID  STEP ID                    ACTION	                        RESULT
- 1   1              Uruchomienie gry przez gracza             Wyświetlenie planszy do gry
- 2   1              Gracz wybrał biale                        Rozmieszczenie pionków na szachownicy
-     2              Gracz wybrał czarne                       Rozmieszczenie pionków na szachownicy
+ID  STEP ID                    ACTION	                                             RESULT
+ 1   1              Uruchomienie gry przez gracza                                  Wyświetlenie planszy do gry
+
+ 2   1              Gracz wybrał biale                                             Rozmieszczenie pionków na szachownicy
+     2              Gracz wybrał czarne                                            Rozmieszczenie pionków na szachownicy
+
 3    1              
+
+
+
+
+
+
+
+
+
+34   1             Zapis ruchu gracza                                             Zablokowanie ruchów gracza i odblokowanie ruchów dla gracza drugirgo
+     2             Zapis powiekszonego licznika                                   Zablokowanie ruchów gracza i odblokowanie ruchów dla gracza drugirgo
     
 
 
