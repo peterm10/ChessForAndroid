@@ -6,16 +6,19 @@ ID  STEP ID   ACTION	                                                        RES
  3   1        Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
      2        Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
 
- 4   1              
+ 4   1        Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
 
+5    1       Zablokowanie pionków czarnych na planszy                     Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
 
-
-
-
-
-
-
-
+6    1       Wykonanie pierwszego ruchu gracza posiadającego              Podpowiedź, którymi pionkami można się poruszać
+             pionki białe w sposób niewłaściwy
+            (ruch niedozwolonym pionkiem) 
+     2      Wykonanie pierwszego ruchu gracza posiadającego               Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
+            pionki białe w sposób niewłaściwy 
+            (nieprawidłowy ruch dozwolonym pionkiem)                      
+     3      Wykonanie pierwszego ruchu gracza posiadającego               Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+            pionki białe w sposób właściwy.
+7    1
 
 24   1       Usuwamy zbity pionek z planszy                               Pionek został usuniety z planszy
 
