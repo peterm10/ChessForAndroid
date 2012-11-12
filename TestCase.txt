@@ -1,12 +1,12 @@
 ID  STEP ID   ACTION	                                                        RESULT
- 1   1        Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+1   1        Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
  
- 2   1        Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
+2    1       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
  
- 3   1        Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
-     2        Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
+3    1       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
+     2       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
 
- 4   1        Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
+4    1        Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
 
 5    1       Zablokowanie pionków czarnych na planszy                     Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
 
