@@ -1,27 +1,27 @@
-package com.brasee.chess;
+package com.example.chessforandroid;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.brasee.chess.moves.CaptureMove;
-import com.brasee.chess.moves.CastlingMove;
-import com.brasee.chess.moves.EnPassantMove;
-import com.brasee.chess.moves.InvalidMove;
-import com.brasee.chess.moves.Move;
-import com.brasee.chess.moves.NormalMove;
-import com.brasee.chess.moves.PromotionMove;
-import com.brasee.chess.moves.Move.MoveType;
-import com.brasee.chess.pieces.Bishop;
-import com.brasee.chess.pieces.King;
-import com.brasee.chess.pieces.Knight;
-import com.brasee.chess.pieces.Pawn;
-import com.brasee.chess.pieces.Piece;
-import com.brasee.chess.pieces.Queen;
-import com.brasee.chess.pieces.Rook;
-import com.brasee.chess.pieces.Piece.Color;
-import com.brasee.chess.pieces.Piece.PieceType;
+import com.example.chessforandroid.moves.CaptureMove;
+import com.example.chessforandroid.moves.CastlingMove;
+import com.example.chessforandroid.moves.EnPassantMove;
+import com.example.chessforandroid.moves.InvalidMove;
+import com.example.chessforandroid.moves.Move;
+import com.example.chessforandroid.moves.NormalMove;
+import com.example.chessforandroid.moves.PromotionMove;
+import com.example.chessforandroid.moves.Move.MoveType;
+import com.example.chessforandroid.pieces.Bishop;
+import com.example.chessforandroid.pieces.King;
+import com.example.chessforandroid.pieces.Knight;
+import com.example.chessforandroid.pieces.Pawn;
+import com.example.chessforandroid.pieces.Piece;
+import com.example.chessforandroid.pieces.Queen;
+import com.example.chessforandroid.pieces.Rook;
+import com.example.chessforandroid.pieces.Piece.Color;
+import com.example.chessforandroid.pieces.Piece.PieceType;
 
 public class Game {
 

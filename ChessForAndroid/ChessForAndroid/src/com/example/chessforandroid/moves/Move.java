@@ -1,11 +1,11 @@
-package com.brasee.chess.moves;
+package com.example.chessforandroid.moves;
 
 import java.util.List;
 import java.util.Map;
 
-import com.brasee.chess.Board;
-import com.brasee.chess.Square;
-import com.brasee.chess.pieces.Piece;
+import com.example.chessforandroid.Board;
+import com.example.chessforandroid.Square;
+import com.example.chessforandroid.Piece;
 
 public interface Move {
 

@@ -1,7 +1,7 @@
-package com.brasee.chess.pieces;
+package com.example.chessforandroid.pieces;
 
-import com.brasee.chess.Board;
-import com.brasee.chess.Square;
+import com.example.chessforandroid.Board;
+import com.example.chessforandroid.Square;
 
 public class Rook extends AbstractPiece {
 
