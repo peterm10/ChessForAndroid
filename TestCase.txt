@@ -289,12 +289,49 @@ ID  STEP ID   ACTION	                                                        RES
      23      Odblokowanie pozostałych pionków gracza pierwszego(user)     Gracz wykonuje ruch pionkami białymi
              posiadającego pionki białe
 
-16   1      Pierwszy gracz(user) wykonuje ruch dozwolonym pionkiem        Zablokowanie pionków gracza i odblokowanie właściwych pionków drugiego gracza.
-            zgodnie z zasadami                
-     2      Pierwszy gracz(user) próbuje wykonać ruch                     Wyświetlenie podpowiedzi, które  pionki można używać.
-            niedozwolonym pionkiem.                           
-     3      Pierwszy gracz(user) wykonuje ruch dozwolonym                 Wyświetlenie podpowiedz, gdzie można poruszyć się pionkiem.
-            pionkiem niezgodnie z zasadami                  
+16   14   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+     2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
+     3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
+     4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
+     5       Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
+     6       Zablokowanie pionków czarnych na planszy                    Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
+     7       Odblokowanie skoczka i pionków podsawowych gracza           Gracz wykonuje ruch odblokowanymi pionkami
+             posiadającego pionki białe
+     8       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, którymi pionkami można się poruszać
+             pionki białe w sposób niewłaściwy
+            (ruch niedozwolonym pionkiem) 
+     9       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
+             pionki białe w sposób niewłaściwy 
+            (nieprawidłowy ruch dozwolonym pionkiem)                      
+     10      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+             pionki białe w sposób właściwy.
+     11      Gracz wykonuje ruch odblokowanym pionkiem                   Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
+     12      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
+     13      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
+             znajdujace sie po prawej stronie w górnym prawym rogu
+     14      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
+             znajdujace sie po lewej stronie w górnym lewym rogu
+     15      Gracz wykonuje ruch skoczkiem porusza sie o dwa pole        Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
+             na pole o przeciwnym kolorze w krztałcie trójkąta
+     16      Zablokowanie ruchu pierwszwgo gracza                         Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki czarne
+     17      Zapis ruchu gracza do historii ruchów i licznika ruchów      Wyświetlenie inf. o liczbie ruchów i ostatniego ruchu w tabeli gracza 
+     18      Odblokowanie skoczka i pionków podsawowych i skoczka         Gracz wykonuje ruch pionkami czarnymi(komputer)
+             gracza posiadającego pionki czarne
+     19      Drugi gracz (komputer) wykonuje ruch w sposób                Usuniecie wybranego pionka z pola i wyświetlenie na wybranym miejscu
+             losowy tą samą metodą co gracz pierwszy     
+     20      Zapis ruchu gracza do historii ruchów i licznika ruchów      Wyświetlenie inf. o liczbie ruchów i ostatniego ruchu w tabeli gracza 
+             drugiego gracza(komputer)
+     21      Zablokowanie ruchu drugiego gracza(komputer) i uruchomienie  Pierwszy gracz wykonuje ruch
+             ruchów pierwszego gracza
+     22      Zapis ruchu gracza do historii ruchów i licznika             Wyświetlenie inf. o liczbie ruchów i ostatniego ruchu w tabeli gracza 
+     23      Odblokowanie pozostałych pionków gracza pierwszego(user)     Gracz wykonuje ruch pionkami białymi
+             posiadającego pionki białe
+     24      Pierwszy gracz(user) wykonuje ruch dozwolonym pionkiem       Zablokowanie pionków gracza i odblokowanie właściwych pionków drugiego gracza.
+             zgodnie z zasadami                
+     25      Pierwszy gracz(user) próbuje wykonać ruch                    Wyświetlenie podpowiedzi, które  pionki można używać.
+             niedozwolonym pionkiem.                           
+     26      Pierwszy gracz(user) wykonuje ruch dozwolonym                Wyświetlenie podpowiedz, gdzie można poruszyć się pionkiem.
+             pionkiem niezgodnie z zasadami                  
 
 19   1      Na dozwolonym polu znajduje się pionek przeciwnika,           Zbijamy pionek, usuwamy z planszy,dodajemy do tabeli zwyciescy zbity pionek
             który można zbić.                          
