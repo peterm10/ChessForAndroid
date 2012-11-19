@@ -48,20 +48,23 @@ ID  STEP ID   ACTION	                                                        RES
      10      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
              pionki białe w sposób właściwy.
 
-7    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+8    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
      4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
      5       Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
      6       Zablokowanie pionków czarnych na planszy                    Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
-     7       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, którymi pionkami można się poruszać
+     7       Odblokowanie skoczka i pionków podsawowych gracza           Gracz wykonuje ruch odblokowanymi pionkami
+             posiadającego pionki białe
+     8       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, którymi pionkami można się poruszać
              pionki białe w sposób niewłaściwy
             (ruch niedozwolonym pionkiem) 
-     8       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
+     9       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
              pionki białe w sposób niewłaściwy 
             (nieprawidłowy ruch dozwolonym pionkiem)                      
-     9       Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+     10      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
              pionki białe w sposób właściwy.
+     11     Gracz wykonuje ruch odblokowanym pionkiem                    Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
 
 10   1       Zablokowanie ruchu pierwszwgo gracza                         Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki czarne
 
