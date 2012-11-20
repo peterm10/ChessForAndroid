@@ -1,0 +1,6 @@
+package com.chess.chessforandroid;
+
+public final class StopSearchingException extends Exception {
+
+}
+

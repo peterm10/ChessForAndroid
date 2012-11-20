@@ -1,0 +1,31 @@
+package com.chess.chessforandroid;
+
+import android.os.Bundle;
+import android.app.Activity;
+//import android.view.Menu;
+
+public class MainActivity extends Activity {
+	 private ChessBoard chessView;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        init();
+
+    }
+
+   /* @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }*/
+    private void init() {
+        chessView = new ChessBoard(this);
+        status = chessView.status;
+        setMaxTime(5000);
+}
+
+
+}
