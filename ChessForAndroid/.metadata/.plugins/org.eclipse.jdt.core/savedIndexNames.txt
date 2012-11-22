@@ -1,5 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Piotr\ProjektIO\ChessForAndroid\ChessForAndroid\.metadata\.plugins\org.eclipse.jdt.core
-167591004.index
-771501293.index
-2872618636.index
-3105448079.index
