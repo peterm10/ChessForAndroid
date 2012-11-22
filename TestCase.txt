@@ -1,7 +1,7 @@
 ﻿ID  STEP ID   ACTION	                                                        RESULT
 1   1        Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
  
-2    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+2     
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
  
 3    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
