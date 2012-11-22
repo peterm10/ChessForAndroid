@@ -1,8 +1,0 @@
-<resources>
-
-    <string name="app_name">Gra w Szachy</string>
-    <string name="hello">Szachy!</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
-
-</resources>
