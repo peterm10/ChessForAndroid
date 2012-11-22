@@ -1,0 +1,5 @@
+package com.chess.chessandroid;
+
+public final class Search {
+
+}

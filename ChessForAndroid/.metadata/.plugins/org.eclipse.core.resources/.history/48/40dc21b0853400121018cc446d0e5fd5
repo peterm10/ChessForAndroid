@@ -1,0 +1,108 @@
+package com.chess.chessandroid;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.widget.ImageView;
+
+
+
+public class Square extends ImageView implements OnTouchListener{
+        private final int x;
+    private final int y;
+    private final ChessBoard board;
+    private Context mContext;
+   
+    //public boolean select = false;
+    private int backgroundColor;
+   
+    public boolean empty;
+   
+    Square(int y, int x, ChessBoard b, Context c) {
+        super(c);
+        mContext = c;
+               
+        this.x = x;
+        this.y = y;
+        board = b;
+       
+        this.setAdjustViewBounds(true);
+        this.setMaxHeight(35);
+        this.setMaxWidth(25);
+        this.setScaleType(ImageView.ScaleType.FIT_XY);
+       
+        if ((x + y) % 2 == 0) {                
+                this.setBackgroundResource(R.drawable.white);
+                this.setImageResource(R.drawable.white);
+                this.backgroundColor = 0;
+        } else {                
+                this.setBackgroundResource(R.drawable.black);
+                this.setImageResource(R.drawable.black);
+                this.backgroundColor = 1;
+        }  
+        this.setId(x*10+y);
+        this.setOnTouchListener(this);
+       
+        empty = true;
+    }
+   
+    public void setIcon(Drawable d) {  
+        if (d != null)
+                this.setImageDrawable(d);
+        else {
+                this.setImageDrawable(this.getBackground());                    
+                /*
+                if (backgroundColor == 0)
+                        this.setImageResource(R.drawable.white);
+                else
+                        this.setImageResource(R.drawable.black);
+                */                      
+        }
+    }
+   
+    public Drawable getIcon() {
+        return this.getDrawable();
+    }
+       
+        public boolean onTouch(View v, MotionEvent event) {            
+                switch(event.getAction()) {
+                case MotionEvent.ACTION_UP:                    
+                        break;
+                case MotionEvent.ACTION_DOWN:                                          
+                        board.selected(y, x, empty);
+                        break;
+                case MotionEvent.ACTION_MOVE:                  
+                        break;
+                default:
+                        break;
+                }
+                return false;
+        }
+       
+        public void setSelect(boolean select) {
+                if (select) {                  
+                        if (backgroundColor == 0)
+                                this.setBackgroundResource(R.drawable.white_h);
+                        else
+                                this.setBackgroundResource(R.drawable.black_h);                
+                } else {                        
+                        if (backgroundColor == 0)
+                                this.setBackgroundResource(R.drawable.white);
+                        else
+                                this.setBackgroundResource(R.drawable.black);
+                }                              
+        }
+       
+        @Override
+        protected void onDraw(Canvas canvas) {
+                // TODO Auto-generated method stub
+                super.onDraw(canvas);
+        }
+}
+
