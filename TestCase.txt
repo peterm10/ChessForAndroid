@@ -13,9 +13,13 @@
        6        Gracz wybierze czarne pionki                             Pionki zostaną rozmieszczone.      
 3
        1       Wykonaj ID 1-2                                            Zablokowanie czarnych pionków do gry, odblokowanie odpowiednich białych pionków
+     
        2       Niewłaściwe białe pionki zostają odblokowane               Możliwość wykonania nieprawidłowego ruchu przez gracza- błąd
+       
        3       Odblokowanie białego skoczka i pionków podstawowych       Gracz/komputer wykonują ruch odblokowanymi pionkami.
+       
        4       Pionki nie zostaną odblokowane                            Błąd- nie można wykonać ruchu
+       
        5       Odblokowane zostaną czarne pionki                         Błąd- niezgodne z zasadami gry w szachy
        
 4     
@@ -66,65 +70,21 @@
 
 7 
      1       Wykonaj ID 1-6                                              Odblokowanie właściwych pionków 2 gracza.
-   
-     2      Wykonaj ID 4 analogicznie dla czarnych pionków               Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza 
+  
+     2      Wykonaj ID 4 analogicznie dla czarnych pionków drugiego gracza(komputera)            Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza 
 
 
+8
 
-10   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
-     2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
-     3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
-     4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
-     5       Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
-     6       Zablokowanie pionków czarnych na planszy                    Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
-     7       Odblokowanie skoczka i pionków podsawowych gracza           Gracz wykonuje ruch odblokowanymi pionkami
-             posiadającego pionki białe
-     8       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, którymi pionkami można się poruszać
-             pionki białe w sposób niewłaściwy
-            (ruch niedozwolonym pionkiem) 
-     9       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
-             pionki białe w sposób niewłaściwy 
-            (nieprawidłowy ruch dozwolonym pionkiem)                      
-     10      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
-             pionki białe w sposób właściwy.
-     11      Gracz wykonuje ruch odblokowanym pionkiem                   Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-     12      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-     13      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             znajdujace sie po prawej stronie w górnym prawym rogu
-     14      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             znajdujace sie po lewej stronie w górnym lewym rogu
-     15      Gracz wykonuje ruch skoczkiem porusza sie o dwa pole        Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             na pole o przeciwnym kolorze w krztałcie trójkąta
-     16      Zablokowanie ruchu pierwszwgo gracza                         Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki czarne
+     1      Wykonaj ID 1-7                                              Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza, wyświetlenie inf. o liczbie ruchów i ostatniego ruchu w tabeli gracza 
+ 
+     2      Wyświetlenie nieprawidłowych danych o ruchach gracza        Błąd- możliwośc dokonania niewłaściwego ruchu
 
-11   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
-     2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
-     3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
-     4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
-     5       Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
-     6       Zablokowanie pionków czarnych na planszy                    Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki białe
-     7       Odblokowanie skoczka i pionków podsawowych gracza           Gracz wykonuje ruch odblokowanymi pionkami
-             posiadającego pionki białe
-     8       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, którymi pionkami można się poruszać
-             pionki białe w sposób niewłaściwy
-            (ruch niedozwolonym pionkiem) 
-     9       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
-             pionki białe w sposób niewłaściwy 
-            (nieprawidłowy ruch dozwolonym pionkiem)                      
-     10      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
-             pionki białe w sposób właściwy.
-     11      Gracz wykonuje ruch odblokowanym pionkiem                   Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-     12      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-     13      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             znajdujace sie po prawej stronie w górnym prawym rogu
-     14      Gracz wykonuje ruch pionkiem do przodu o jedno pole         Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             znajdujace sie po lewej stronie w górnym lewym rogu
-     15      Gracz wykonuje ruch skoczkiem porusza sie o dwa pole        Usunicie pionka z pola i wyświetlenie na polu wskazanym przez gracza
-             na pole o przeciwnym kolorze w krztałcie trójkąta
-     16      Zablokowanie ruchu pierwszwgo gracza                         Odblokowanie skoczka i pionków podsawowych gracza posiadającego pionki czarne
-     17      Zapis ruchu gracza do historii ruchów i licznika ruchów      Wyświetlenie inf. o liczbie ruchów i ostatniego ruchu w tabeli gracza 
-     18      Odblokowanie skoczka i pionków podsawowych i skoczka         Gracz wykonuje ruch pionkami czarnymi(komputer)
-             gracza posiadającego pionki czarne
+     3      Brak wyświetlenia danych                                    Błąd       
+     
+     4      Wyświetlenie właściwych danych o ruchach gracza             Zablokowanie ruchu drugiego gracza i odblokowanie pionków pierwszego.          
+
+
 
 12   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
