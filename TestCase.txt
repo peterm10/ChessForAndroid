@@ -18,12 +18,16 @@
        4       Pionki nie zostaną odblokowane                            Błąd- nie można wykonać ruchu
        5       Odblokowane zostaną czarne pionki                         Błąd- niezgodne z zasadami gry w szachy
        
-4    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
-     2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
-     3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
-     4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
-     5       Rozmieszczenie pionków na szachownicy                       Zablokowanie pionków czarnych na planszy
-
+4     
+       1      Wykonaj ID 1-3                                             Gracz wykonuje pierwszy ruch odblokowanymi pionkami                                                    
+       2      Wykonanie  pierwszego ruchu gracza posiadającego
+              pionki białe w sposób niewłaściwy (ruch niedozwolonym      Podpowiedź, którymi pionkami można sie poruszać.
+              pionkiem)
+       3       Wykonanie pierwszego ruchu gracza posiadającego             Podpowiedź, o dozwolonych ruchach poszczególnymi pionkami
+             pionki białe w sposób niewłaściwy 
+            (nieprawidłowy ruch dozwolonym pionkiem)    
+       4      Wykonanie pierwszego ruchu gracza posiadającego             Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+             pionki białe w sposób właściwy
 5    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
