@@ -89,6 +89,9 @@
 9
 
      1      Wykonaj ID 1-8                                              Odblokowanie pionków pierwszego gracza.
+
+     2      Wykonaj ID 4 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+
 12   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
