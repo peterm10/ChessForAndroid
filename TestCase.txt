@@ -41,8 +41,26 @@
 
 5            
       1      Wykonaj ID 1-4                                               Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
-      2      Wykonanie pierwszego ruchu gracza posiadającego pionki
+    
+      2      Wykonanie pierwszego ruchu gracza posiadającego pionki       Pionek nie zostaje usuniety z  pola - błąd
              białe w sposób właściwy
+      
+      3      Wykonanie pierwszego ruchu gracza posiadającego pionki       Pionek nie zostaje wyświetlony we wskazanym miejscu - błąd
+             białe w sposób właściwy      
+
+      4     Wykonanie pierwszego ruchu gracza posiadającego pionki       Usuniecie pionka z pola i wyświetlenie na polu wskazanym przez gracza.
+             białe w sposób właściwy
+
+6
+      1     Wykonaj ID 1-5                                               Usuniecie pionka z pola i wyświetlenie na polu wskazanym przez gracza.
+      
+      2    Brak zablokowania pionków pierwszego  gracza                  Błąd - jednoczesna możliwość ruchu przez 2 graczy.
+
+      3    Zablokowanie pionków pierwszego gracza                        Brak odblokowania pionków 2 gracza - błąd, niemożność wykonania ruchu przez kogokolwiek.
+
+      4    Zablokowanie pionków pierwszego gracza                        Odblokowanie niewłaściwych pionków 2 gracza - błąd, umożliwienie ruchu niezggodnego z zasadami.                                                  
+
+      5    Zablokowanie pionków pierwszego gracza                        Odblokowanie właściwych pionków 2 gracza.
 8    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
