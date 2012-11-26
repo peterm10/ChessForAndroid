@@ -64,6 +64,11 @@
            pionki białe w sposób właściwy.
      
 
+7 
+     1       Wykonaj ID 1-6                                              Odblokowanie właściwych pionków 2 gracza.
+   
+     2      Wykonaj ID 4 analogicznie dla czarnych pionków               Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza 
+
 
 
 10   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
