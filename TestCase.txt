@@ -1,5 +1,8 @@
 ﻿ID  STEP ID   ACTION	                                                        RESULT
-1   1        Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+1      1        Niewłaściwe uruchomienie gry przez gracza                 Gra nie zostanie uruchomiona
+       2        Uruchomienie  gry przez gracza                           Plansza do gry się nie wyświetli - błąd.
+       3        Uruchomienie gry przez gracza                            Wyświetlenie złej planszy do gry
+       4        Uruchomienie gry przez gracza                            Wyświetlenie planszy do gry
  
 2     
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
