@@ -10,12 +10,15 @@
        3        Gracz wybierze białe pionki                              Pionki nie zostaną rozmieszczone - błąd
        4        Gracz wybierze białe pionki                              Pionki zostaną rozmieszczone
        5        Gracz wybierze czarne pionki                             Pionki nie zostaną rozmieszczone - błąd
-       6        Gracz wybierze czarne pionki                             Pionki zostaną rozmieszczone.Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
-    
-2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
-     3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
-     4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
+       6        Gracz wybierze czarne pionki                             Pionki zostaną rozmieszczone.      Plansza zostanie wyswietlona                               
 
+3
+       1       Wykonaj ID 1-2                                            Zablokowanie czarnych pionków do gry, odblokowanie odpowiednich białych pionków
+       2       Niewłaściwe białe pionki zostają odblokowane               Możliwość wykonania nieprawidłowego ruchu przez gracza- błąd
+       3       Odblokowanie białego skoczka i pionków podstawowych       Gracz/komputer wykonują ruch odblokowanymi pionkami.
+       4       Pionki nie zostaną odblokowane                            Błąd- nie można wykonać ruchu
+       5       Odblokowane zostaną czarne pionki                         Błąd- nie zgodne z zasadami gry w szachy
+       
 4    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
