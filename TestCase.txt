@@ -5,9 +5,13 @@
        4        Uruchomienie gry przez gracza                            Wyświetlenie planszy do gry
  
 2     
-     2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
- 
-3    1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
+       1        Wykonaj ID 1                                             Wybór pionków do gry(białe/czarne)
+       2        Gracz wybierze niewłaściwie pionki                        Błąd
+       3        Gracz wybierze białe pionki                              Pionki nie zostaną rozmieszczone - błąd
+       4        Gracz wybierze białe pionki                              Pionki zostaną rozmieszczone
+       5        Gracz wybierze czarne pionki                             Pionki nie zostaną rozmieszczone - błąd
+       6        Gracz wybierze czarne pionki                             Pionki zostaną rozmieszczone.
+Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
      4       Gracz wybrał czarne                                         Rozmieszczenie pionków na szachownicy
