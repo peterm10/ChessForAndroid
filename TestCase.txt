@@ -295,4 +295,22 @@
  
     4   Którykolwiek z graczy nie ma możliwości ruchu                     Koniec gry, wyświetlenie wyniku
 
-    5   Którykolwiek z graczy ma zszachowanego króla                      Koniec gry, wyświetlenie wyniku
+    5  Którykolwiek z graczy ma zszachowanego króla                       Koniec gry, wyświetlenie wyniku
+
+28
+ 
+    1 Wykonaj ID 1-27                                                    Wyświetlenie wyniku
+
+    2  Gra zostaje zakończona z któregokolwiek z                          Błąd                      
+
+      powodów, a wynik nie zostanie wyświetlony
+
+    3 Gra zostaje zakończona z któregokolwiek z                           Błąd
+
+     powodów, a wyświetlony wynik jest nieprawidłowy 
+
+    4  Gra zostaje zakończona z któregokolwiek z powodów
+
+       i zostaje wyświetlony prawidłowy wynik
+
+    
