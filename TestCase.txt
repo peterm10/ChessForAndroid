@@ -46,8 +46,7 @@
 5            
       1      Wykonaj ID 1-4                                               Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
 
-      2      Wykonaj ID 3 analogicznie dla danej sytuacji                  Gracz/komputer wykonują ruch odblokowanymi pionkami  
-    
+      
       2      Wykonanie pierwszego ruchu gracza posiadającego pionki       Pionek nie zostaje usuniety z  pola - błąd
              białe w sposób właściwy
       
