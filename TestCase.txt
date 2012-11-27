@@ -209,10 +209,37 @@
        4 Król jest zagrożony i nie ma możliwości ratunku                 Koniec gry
       
        5 Król jest zagrożony i wyświetlona zostaje poprawna              Przekazanie ruchu drugiemu graczowi i zobligowanie go do wykonania ruchu ratującego króla   
-
-        podpowiedź
+                                                                         
+        podpowiedź                                                           (automatycznie o ile to komputer)           
 
 20
+
+       1 Wykonaj ID 1- 19                                               Sprawdzanie, zagrożenia króla dla drugiego gracza
+
+       2 Wykonaj ID 17 dla drugiego gracza, o ile                        Zapis ruchu gracza do historii ruchów i licznika ruchów danego gracza, sprawdzenie czy król jest zagrożony       
+ 
+         to komputer, uwzglednij, że ruch wykonuje losowo
+
+
+21
+
+        1 Wykonaj ID 1- 20                                              Przypadek braku zagrożenia króla
+
+        2 Wykonaj Id 18 dla drugiego gracza, o ile to                   Odblokowanie właściwych pionków 2 gracza
+  
+        komputer, uwzglednij, że ruch wykonuje losowo          
+
+
+22
+
+        1 Wykonaj ID 1-21                                               Przypadek, gdy król jest zagrożony
+
+        2 Wykonaj ID 19 analogicznie dla drugiego gracza,                Przekazanie ruchu drugiemu graczowi i zobligowanie go do wykonania ruchu ratującego króla   
+
+
+           o ile to komputer, uwzglednij, że ruch wykonuje 
+
+           losowo.
 
 27   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
