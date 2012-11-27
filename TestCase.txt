@@ -241,6 +241,49 @@
 
            losowo.
 
+23
+
+       1   Wykonaj ID 1- 22                                                Sprawdzenie czy dopuszczalne sa jeszcze jakieś ruchy, zgodne z zasadami, możliwe dla gracza-przypadek gry brak jest możliwych ruchów
+
+       2   Brak możliwości ruchu gracza, brak wyświetlenia                 Błąd
+ 
+           komunikatu o końcu gry
+
+       3  Brak możliwości ruchu gracza, wyświetlenie komunikatu           Koniec gry, zwyciestwo drugiego gracza
+
+          koniec gry
+
+24
+  
+       1   Wykonaj ID 1-23                                               Przypadek, gdy istnieją możliwe ruchu
+
+       2   Wyświetlany zostaje komunikat o końcu gry                     Błąd
+
+       3   Brak komunikatu o końcu gry                                  Przekazanie ruchu drugiemu graczowi
+
+25     
+ 
+      1   Wykonaj ID 1-24                                              Sprawdzenie czy dopuszczalne sa jeszcze jakieś ruchy dla drugiego gracza, zgodne z zasadami, możliwe dla gracza-przypadek gry brak jest możliwych ruchów
+
+      2   Wykonaj ID 23 analogicznie dla drugie gracza, 
+ 
+         o ile to komputer uwzglednij, że ruch wykonuje                 Koniec gry, zwyciestwo przeciwnika
+  
+         losowo
+
+26
+
+     1  Wykonaj ID 1- 25                                                Sprawdzenie czy dopuszczalne sa jeszcze jakieś ruchy dla drugiego gracza, zgodne z zasadami, możliwe dla gracza-przypadek  gdy istnieją możliwe ruchy
+ 
+     2  Wykonaj ID 24 analogicznie dla drugiego gracza,                 Przekazanie ruchu kolejnemu graczowi
+  
+      o ile to kompute uzglednij, ze ruch wykonuje 
+
+     losowo
+
+2
+
+
 27   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
