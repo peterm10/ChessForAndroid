@@ -86,10 +86,26 @@
      4      Wyświetlenie właściwych danych o ruchach gracza             Zablokowanie ruchu drugiego gracza i odblokowanie pionków pierwszego gracza          
 
 9
+     1     Wykonaj ID 1-8                                               Zablokowanie ruchu drugiego gracza i odblokowanie pionków pierwszego gracza          
 
-     1      Wykonaj ID 1-8                                              Odblokowanie pionków pierwszego gracza.
+     2     Wykonaj ID 3 analogicznie dla danej sytuacji                 Odblokowanie pionków pierwszego gracza.
+  
+10
+
+     1      Wykonaj ID 1-9                                             Odblokowanie pionków pierwszego gracza.
 
      2      Wykonaj ID 4 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+
+11
+     
+     1      Wykonaj ID 1-10                                            Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza, odblokowanie pionków drugiego gracza
+
+     2      Wykonaj ID 3 analogicznie dla danej sytuacji                 Odblokowanie pionków drugiego gracza
+
+12
+     1      Wykonaj ID 1-11                                             Odblokowanie pionków drugiego gracza.
+
+     2      Wykonaj ID 4 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza
 
 12   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
