@@ -277,12 +277,22 @@
  
      2  Wykonaj ID 24 analogicznie dla drugiego gracza,                 Przekazanie ruchu kolejnemu graczowi
   
-      o ile to kompute uzglednij, ze ruch wykonuje 
+      o ile to komputer uzglednij, ze ruch wykonuje 
 
      losowo
 
 27
+     
+     1  Wykonaj ID 1-26                                                  Kończenie gry
 
+     2 Którykolwiek z graczy nie ma możliwości ruchu,                       Błąd 
+       
+        ale gra nie zostaje zakończona                      
       
+     3  Którykolwiek z graczy ma zszachowanego króla,                       Błąd
+        
+        ale gra nie zostaje zakończona
+ 
+    4   Którykolwiek z graczy nie ma możliwości ruchu                     Koniec gry, wyświetlenie wyniku
 
-
+    5   Którykolwiek z graczy ma zszachowanego króla                      Koniec gry, wyświetlenie wyniku
