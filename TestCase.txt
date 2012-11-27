@@ -79,7 +79,7 @@
 7 
      1       Wykonaj ID 1-6                                              Odblokowanie właściwych pionków 2 gracza.
   
-     2      Wykonaj ID 4-8 analogicznie dla czarnych pionków drugiego gracza            Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza 
+     2      Wykonaj ID 4-6 analogicznie dla czarnych pionków drugiego gracza            Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza 
 
      
 
@@ -135,6 +135,32 @@
            sytuacji
 
       6    Wykonaj ID 5- 8 analogicznie dla danej sytuacji                   Zablokowanie pionków danego gracza i oblokowanie pionków drugiego.                
+
+
+14
+
+     
+     1     Wykonaj ID 1-13                                                   Przypadek, kiedy nastepuje zbicie pionka danego gracza
+
+     2     Zbity jest pionek, niezgodnie z zasadami                          Błąd        
+
+     3     Istnieje możliwość zbicia, ale pionek nie                         Błąd            
+    
+          zostaje zbity, mimo że gracz chce to zrobić
+
+     4    Pionek zostaje zbity prawidłowo, ale nie zostaje                   Błąd          
+   
+          usuniety z planszy
+
+     5    Pionek zostaje zbity prawidłowo i zostaje należycie                Błąd
+          usuniety z planszy, ale nie zostaje uwzgledniony 
+ 
+          w  wyniku
+
+     6    Pionek zostaje zbity prawidłowo i należycie usuniety               Przekazanie ruchu kolejnemu graczowi
+
+          z planszy, a także zostaje to uwzgldnione w wyniku     
+
 
 19   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
