@@ -159,7 +159,26 @@
 
      6    Pionek zostaje zbity prawidłowo i należycie usuniety               Przekazanie ruchu kolejnemu graczowi
 
-          z planszy, a także zostaje to uwzgldnione w wyniku     
+          z planszy, a także zostaje to uwzgeldnione w wyniku     
+
+
+
+15
+
+     1    Wykonaj ID 1-14                                                    Przekazanie ruchu kolejnemu graczowi
+
+     2    Wykonaj ID 13 analogicznie dla sytuacji kolejnego                  Zablokowanie pionków danego gracza i oblokowanie pionków kolejnego
+           
+          gracza
+
+
+16
+
+       1  Wykonaj ID 1-15                                                    Przypadek, gdy nastepuje zbijanie pionka          
+          
+       2  Wykonaj ID 14 dla danej sytuacji kolejnego gracza                  Zablokowanie pionków danego gracza i oblokowanie pionków kolejnego
+           
+
 
 
 19   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
