@@ -79,7 +79,7 @@
 7 
      1       Wykonaj ID 1-6                                              Odblokowanie właściwych pionków 2 gracza.
   
-     2      Wykonaj ID 4 i 5 analogicznie dla czarnych pionków drugiego gracza            Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza 
+     2      Wykonaj ID 4-8 analogicznie dla czarnych pionków drugiego gracza            Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza 
 
      
 
@@ -102,7 +102,7 @@
 
      1      Wykonaj ID 1-9                                             Odblokowanie pionków pierwszego gracza.
 
-     2      Wykonaj ID 4 i 5 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
+     2      Wykonaj ID 4-8 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów pierwszego gracza
 
 11
      
@@ -113,7 +113,7 @@
 12
      1      Wykonaj ID 1-11                                             Odblokowanie pionków drugiego gracza.
 
-     2      Wykonaj ID 4 i 5 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza
+     2      Wykonaj ID 4-8 analogicznie dla danej sytuacji                 Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza
 
 
 
@@ -121,7 +121,21 @@
 
       1    Wykonaj ID 1-12                                                Zapis ruchu gracza do historii ruchów i licznika ruchów drugiego gracza                                                                  
 
-      2       
+      2    Wykonaj ID 4 STEP ID 1-5 analogicznie dla danej sytuacji       Podpowiedź o dozwolonych ruchach, pionkach, sprawdzenie czy na wskazanym polu znajduje sie juz pionek
+
+      3    Gracz umieszcza pionek na polu, na ktorym znajduje sie juz     Błąd
+         
+           inny pionek, zbicie niedozwolone
+
+      4    Gracz umieszcza pionek na polu, na ktorym znajduje sie         Ruch prawidłowy, zbicie pionka , usuniecie z planszy, zablokowanie ruchów gracza i przekazanie ich drugiemu graczowi
+      
+           pionek, który można zbić
+
+      5    Wykonaj ID 4 STEP ID 6 analogicznie dla danej                      Zapis ruchu gracza do historii ruchów i licznika ruchów danego gracza
+           sytuacji
+
+      6    Wykonaj ID 5- 8 analogicznie dla danej sytuacji                   Zablokowanie pionków danego gracza i oblokowanie pionków drugiego.                
+
 19   1       Uruchomienie gry przez gracza                               Wyświetlenie planszy do gry
      2       Plansza zostanie wyswietlona                                Wybor koloru przez gracza (biale/czarne)
      3       Gracz wybrał biale                                          Rozmieszczenie pionków na szachownicy
