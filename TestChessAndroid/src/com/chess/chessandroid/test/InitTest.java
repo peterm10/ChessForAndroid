@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 public class InitTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-//	private Solo solo;
 	private TextView status;
 	private ChessBoard chessView;
 	@SuppressWarnings("deprecation")
@@ -32,7 +31,7 @@ public class InitTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	    }
 	public void testStatus(){
 		String mathResult = status.getText().toString();  
-		assertEquals("Sprawdzanie czy plansza została uruchomiona", mathResult);
+		assertEquals("Sprawdzanie czy status został wyświetlony", mathResult);
 	}
 	public void testBoard(){
 		
