@@ -222,14 +222,14 @@ To po prostu skanuje p³ytê by znaleŸæ oboik s król wolne miejsce
 i wzywa atak (), aby sprawdziæ, czy jest atakowany.
  */
 
-boolean inCheck(int s) {
+public boolean inCheck(int s) {
     return attack(kingSquare[s], s ^ 1);
 }
 
 /* attack() zrwaca true jesli kwadrat square sq jest atakowany z którejœ strony
 s i false w przeciwnym wypadku. */
 
-boolean attack(int sq, int s) {
+public boolean attack(int sq, int s) {
      long attackSq = (1L << sq);
      	if (s == LIGHT) {
      		long moves = ((pawnBits[LIGHT] & 0x00fefefefefefefeL) >> 9) & attackSq;
@@ -267,11 +267,12 @@ boolean attack(int sq, int s) {
             return false;
     }
 
-/* gen() generates pseudo-legal moves for the current position.
-It scans the board to find friendly pieces and then determines
-what squares they attack. When it finds a piece/square
-combination, it calls genPush to put the move on the "move
-stack." */
+/* gen() losuje pseudo losowe ruchy dla biezoncej pozycji
+ * Przeszukuje plansze w poszukiwaniu wolnego miejsca i 
+ * sprawdza czy na pozycji na której bedzie postawiony 
+ * jest jakieœ zagro¿enie po umieszczeniu umieszcza 
+ * pozycje na stosie ruchów
+ * genPush */
 
 List gen() {
             List ret = new ArrayList();    
@@ -355,7 +356,7 @@ List gen() {
                     pieces &= (pieces - 1);
             }
 
-            /* generate castle moves */
+            /* generuje ruch wie¿y */
             if (side == LIGHT) {
                     if (((castle & 1) != 0) && (piece[F1] == EMPTY)
                                     && (piece[G1] == EMPTY))
@@ -372,7 +373,7 @@ List gen() {
                             genPush(ret, E8, C8, 2);
             }
 
-            /* generate en passant moves */
+            /* generujemy en ruchów*/
             if (ep != -1) {
                     if (side == LIGHT) {
                             if (COL(ep) != 0 && color[ep + 7] == LIGHT
@@ -393,9 +394,9 @@ List gen() {
             return ret;
     }
 
-/* genCaps() is basically a copy of gen() that's modified to
-only generate capture and promote moves. It's used by the
-quiescence search. */
+/* genCaps() jest kopiom gen tylko ¿e 
+ * nie generuje tylko rejestruje i porównuje ruchy
+ * jest generowany przez quiescence search. */
 
  List genCaps() {
             List ret = new ArrayList();
@@ -469,14 +470,16 @@ quiescence search. */
             return ret;
     }
 
- /* genPush() puts a move on the move stack, unless it's a
- pawn promotion that needs to be handled by genPromote().
- It also assigns a score to the move for alpha-beta move
- ordering. If the move is a capture, it uses MVV/LVA
- (Most Valuable Victim/Least Valuable Attacker). Otherwise,
- it uses the move's history heuristic value. Note that
- 1,000,000 is added to a capture move's score, so it
- always gets ordered above a "normal" move. */
+ /* genPush() wstawia na stos ruchów chyba ze na 
+  * stosie jest pionek promowany u¿ywamy wtedy funkcji 
+  * genPromote().
+  * Przypisanie ruchów alfanumeryczni  
+  * Jeœli ruch jest przechwytywanie, u¿ywa MVV / Lot
+  * (Most Valuable Victim / najmniej cenne Atakuj¹cy). 
+  * W przeciwnym razie, u¿ywa on the Move to wartoœæ heurystyczn¹ historii.
+  * Nale¿y pamiêtaæ, ¿e 1000000 wprowadza siê do przechwytywania 
+  * w wyniku przemieszczania siê, a wiêc zawsze pobiera uporz¹dkowane 
+  * powy¿ej "normalnego" ruchu. */
  
  void genPush(Collection ret, int from, int to, int bits) {
             if ((bits & 16) != 0) {
@@ -502,8 +505,8 @@ quiescence search. */
             ret.add(g);
     }    
  
- /* genPromote() is just like genPush(), only it puts 4 moves
- on the move stack, one for each possible promotion piece */
+ /* genPromote() jest taki jak genPush (), tylko stawia 4 ruchy
+  na stosie ruchu, po jednym dla ka¿dego mo¿liwego elementu promocji */
  
  void genPromote(Collection ret, int from, int to, int bits) {
             for (char i = KNIGHT; i <= QUEEN; ++i) {
@@ -513,9 +516,8 @@ quiescence search. */
             }
  }
  
- /* makemove() makes a move. If the move is illegal, it
- undoes whatever it did and returns false. Otherwise, it
- returns true. */      
+ /* makemove() wykonaj ruch. Jesli ruch jest z³y to 
+  * zwraca false i cofa ruch w przeciwnym racie true*/      
  boolean makeMove(Move m) {
             long oldBits[] = { pieceBits[LIGHT], pieceBits[DARK] };
 
@@ -570,7 +572,7 @@ quiescence search. */
                     piece[from] = EMPTY;
                     pieceBits[side] ^= (1L << from) | (1L << to);
             }
-            /* back up information so we can take the move back later. */
+            /* kopii zapasowych informacji, abyœmy mogli cofn¹æ ruch. */
            
             HistoryData h = new HistoryData();              
             h.m = m;
@@ -585,8 +587,7 @@ quiescence search. */
             histDat[hply++] = h;
                                                        
             /*
-             * update the castle, en passant, and fifty-move-draw variables
-             */
+             * zaktualizowaæ pozycji wiezy             */
             castle &= castleMask[from] & castleMask[to];
             if ((m.bits & 8) != 0) {
                     if (side == LIGHT)
@@ -600,7 +601,7 @@ quiescence search. */
             else
                     ++fifty;
 
-            /* move the piece */
+            /* ruch pionka */
             int thePiece = piece[from];
             if (thePiece == KING)
                     kingSquare[side] = to;
@@ -629,7 +630,7 @@ quiescence search. */
                             pieceMat[xside] -= pieceValue[capture];
             }
 
-            /* erase the pawn if this is an en passant move */
+            /* usun¹æ pionka czy to ruch pionka  */
             if ((m.bits & 4) != 0) {
                     if (side == LIGHT) {
                             color[to + 8] = EMPTY;
@@ -645,8 +646,8 @@ quiescence search. */
             }
 
             /*
-             * switch sides and test for legality (if we can capture the other guy's
-             * king, it's an illegal position and we need to take the move back)
+             * zmieniæ strony i sprawdzania poprawnoœæ ruchów (jeœli mo¿emy uchwyciæ inna pozycje
+              * Król, to z³a pozycja i musimy podj¹æ ruch do ty³u
              */
             side ^= 1;
             xside ^= 1;
@@ -657,7 +658,7 @@ quiescence search. */
             return true;
     }
  
- /* takeBack() is very similar to makeMove(), only backwards :)  */
+ /* takeBack() to samo co Makemowe tylko cofie do ty³u ruch:)  */
  void takeBack() {
             side ^= 1;
             xside ^= 1;
@@ -761,22 +762,22 @@ quiescence search. */
             return sb.toString();
     }
  
- /* reps() returns the number of times that the current
- position has been repeated. Thanks to John Stanback
- for this clever algorithm. */    
+ /* reps() zwraca iloœæ obecnych
+pozycja zosta³a powtórzone. Dziêki Janowi Stanback
+do tego sprytnego algorytmu. */    
  int reps() {
             int b[] = new int[64];
             int c = 0; /*
-                                     * count of squares that are different from the current
-                                     * position
+                                     *liczy  kwadraty, które s¹ ró¿ne od obecny
+                                      * Pozycja
                                      */
-            int r = 0; /* number of repetitions */
+            int r = 0; /* liczba powtórzeñ */
 
-            /* is a repetition impossible? */
+            /* powturka z³ego ruchu */
             if (fifty <= 3)
                     return 0;
 
-            /* loop through the reversible moves */
+            /* odwracanie ruchów */
             for (int i = hply - 1; i >= hply - fifty - 1; --i) {
                     if (++b[histDat[i].m.getFrom()] == 0)
                             --c;
@@ -794,9 +795,9 @@ quiescence search. */
     }
      
  int eval() {
-            int score[] = new int[2]; /* each side's score */
+            int score[] = new int[2];
 
-            /* this is the first pass: set up pawnRank, and pawnMat. */
+            /* Ka¿da strona jest score pierwszy pass: ustawiæ pawnRank i pawnMat. */
             if (oldPawnBits != (pawnBits[LIGHT] | pawnBits[DARK])) {
                     for (int i = 0; i < 10; ++i) {
                             pawnRank[LIGHT][i] = 0;
@@ -809,8 +810,8 @@ quiescence search. */
                             int i = getLBit(pieces);
                             pawnMat[LIGHT] += pieceValue[PAWN];
                             int f = COL(i) + 1; /*
-                                                                     * add 1 because of the extra file in the
-                                                                     * array
+                                                                     * dodaæ 1 ze wzglêdu na dodatkowe pliku w
+                                                                      * tablica
                                                                      */
                             if (pawnRank[LIGHT][f] < ROW(i))
                                     pawnRank[LIGHT][f] = ROW(i);
@@ -821,9 +822,7 @@ quiescence search. */
                             int i = getLBit(pieces);
                             pawnMat[DARK] += pieceValue[PAWN];
                             int f = COL(i) + 1; /*
-                                                                     * add 1 because of the extra file in the
-                                                                     * array
-                                                                     */
+                                                                                                                                        */
                             if (pawnRank[DARK][f] > ROW(i))
                                     pawnRank[DARK][f] = ROW(i);
                             pieces &= (pieces - 1);
@@ -896,8 +895,8 @@ quiescence search. */
             }
 
             /*
-             * the score[] array is set, now return the score relative to the side
-             * to move
+             * the score[] jest ustawiona, teraz zwracaj¹ wynik w stosunku do strony
+              * Przenieœæ
              */
             if (side == LIGHT)
                     return score[LIGHT] - score[DARK];
@@ -905,29 +904,27 @@ quiescence search. */
     }  
  
  int evalLightPawn(int sq) {
-            int r = 0; /* return value */
-            int f = COL(sq) + 1; /* pawn's file */
+            int r = 0; /* zwróc wartosc */
+            int f = COL(sq) + 1; /* zwróc dane */
 
             r += pawnPcsq[sq];
 
-            /* if there's a pawn behind this one, it's doubled */
+            /* jeœli jest pionkiem za ten jeden, to podwojona */
             if (pawnRank[LIGHT][f] > ROW(sq))
                     r -= DOUBLED_PAWN_PENALTY;
 
             /*
-             * if there aren't any friendly pawns on either side of this one, it's
-             * isolated
+             * jeœli nie ma ¿adnych przyjazne pionki po obu stronach tego jednego
+              * 
              */
             if ((pawnRank[LIGHT][f - 1] == 0) && (pawnRank[LIGHT][f + 1] == 0))
                     r -= ISOLATED_PAWN_PENALTY;
 
-            /* if it's not isolated, it might be backwards */
             else if ((pawnRank[LIGHT][f - 1] < ROW(sq))
                             && (pawnRank[LIGHT][f + 1] < ROW(sq)))
                     r -= BACKWARDS_PAWN_PENALTY;
 
-            /* add a bonus if the pawn is passed */
-            if ((pawnRank[DARK][f - 1] >= ROW(sq))
+             if ((pawnRank[DARK][f - 1] >= ROW(sq))
                             && (pawnRank[DARK][f] >= ROW(sq))
                             && (pawnRank[DARK][f + 1] >= ROW(sq)))
                     r += (7 - ROW(sq)) * PASSED_PAWN_BONUS;
@@ -936,29 +933,22 @@ quiescence search. */
     }
 
     int evalDarkPawn(int sq) {
-            int r = 0; /* the value to return */
-            int f = COL(sq) + 1; /* the pawn's file */
+            int r = 0; /* wartoœæ zwracana */
+            int f = COL(sq) + 1; /* pioneki w pliku */
 
             r += pawnPcsq[flip[sq]];
 
-            /* if there's a pawn behind this one, it's doubled */
             if (pawnRank[DARK][f] < ROW(sq))
                     r -= DOUBLED_PAWN_PENALTY;
 
-            /*
-             * if there aren't any friendly pawns on either side of this one, it's
-             * isolated
-             */
-            if ((pawnRank[DARK][f - 1] == 7) && (pawnRank[DARK][f + 1] == 7))
+             if ((pawnRank[DARK][f - 1] == 7) && (pawnRank[DARK][f + 1] == 7))
                     r -= ISOLATED_PAWN_PENALTY;
 
-            /* if it's not isolated, it might be backwards */
             else if ((pawnRank[DARK][f - 1] > ROW(sq))
                             && (pawnRank[DARK][f + 1] > ROW(sq)))
                     r -= BACKWARDS_PAWN_PENALTY;
 
-            /* add a bonus if the pawn is passed */
-            if ((pawnRank[LIGHT][f - 1] <= ROW(sq))
+             if ((pawnRank[LIGHT][f - 1] <= ROW(sq))
                             && (pawnRank[LIGHT][f] <= ROW(sq))
                             && (pawnRank[LIGHT][f + 1] <= ROW(sq)))
                     r += ROW(sq) * PASSED_PAWN_BONUS;
@@ -970,15 +960,15 @@ quiescence search. */
             int r = kingPcsq[sq]; /* return value */
 
             /*
-             * if the king is castled, use a special function to evaluate the pawns
-             * on the appropriate side
+             * jeœli król jest castled, nale¿y u¿ywaæ specjalnych funkcji, aby oceniæ pionki
+              * Na odpowiedniej stronie
              */
             if (COL(sq) < 3) {
                     r += evalLkp(1);
                     r += evalLkp(2);
                     r += evalLkp(3) / 2; /*
-                                                             * problems with pawns on the c & f files are
-                                                             * not as severe
+                                                              Problemy z pionków na C & f pliki s¹
+                                                              * Nie tak powa¿na
                                                              */
             } else if (COL(sq) > 4) {
                     r += evalLkp(8);
@@ -987,8 +977,8 @@ quiescence search. */
             }
 
             /*
-             * otherwise, just assess a penalty if there are open files near the
-             * king
+             *inaczej, po prostu oceniæ jakie pola w poblizu sa wolne
+              * king
              */
             else {
                     for (int i = COL(sq); i <= COL(sq) + 2; ++i)
@@ -997,9 +987,9 @@ quiescence search. */
             }
 
             /*
-             * scale the king safety value according to the opponent's material; the
-             * premise is that your king safety can only be bad if the opponent has
-             * enough pieces to attack you
+             * sprawdzaæ wartoœæ bezpieczeñstwa króla wed³ug przeciwnika ;
+              Za³o¿eniem jest, ¿e * bezpieczeñstwo król mo¿e byæ tylko Ÿle, jeœli przeciwnik ma
+              * Ma³o sztuk do ataku
              */
             r *= pieceMat[DARK];
             r /= 3100;
@@ -1007,26 +997,26 @@ quiescence search. */
             return r;
     }
 
-    /* evalLkp(f) evaluates the Light King Pawn on file f */
+    /* evalLkp(f) ocena pionka  */
 
     int evalLkp(int f) {
             int r = 0;
 
             if (pawnRank[LIGHT][f] == 6)
-                    ; /* pawn hasn't moved */
+                    ; /* pionek nie ruchomy */
             else if (pawnRank[LIGHT][f] == 5)
-                    r -= 10; /* pawn moved one square */
+                    r -= 10; /* pionek przesuno³ sie o jedno pole */
             else if (pawnRank[LIGHT][f] != 0)
-                    r -= 20; /* pawn moved more than one square */
+                    r -= 20; /* pionek przesuno³ sie o wiecej pól */
             else
-                    r -= 25; /* no pawn on this file */
+                    r -= 25; /* to nie pionek */
 
             if (pawnRank[DARK][f] == 7)
-                    r -= 15; /* no enemy pawn */
+                    r -= 15; /* pionek przeciwnika */
             else if (pawnRank[DARK][f] == 5)
-                    r -= 10; /* enemy pawn on the 3rd rank */
+                    r -= 10; /* pionek przeciwnika na 3 losowaniu */
             else if (pawnRank[DARK][f] == 4)
-                    r -= 5; /* enemy pawn on the 4th rank */
+                    r -= 5; /* pionek przeciwnika na 3 losowaniu */
 
             return r;
     }

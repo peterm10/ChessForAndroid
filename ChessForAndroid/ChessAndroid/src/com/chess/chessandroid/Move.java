@@ -12,7 +12,7 @@ public final class Move<T> extends MoveBase implements Constants, Comparable<T> 
     final char pieceLetter;
     int score = 0;
 
-    Move(int from, int to, int promote, int bits, char pieceLetter) {
+    public Move(int from, int to, int promote, int bits, char pieceLetter) {
             super(from, to);
             this.promote = promote;
             this.bits = bits;

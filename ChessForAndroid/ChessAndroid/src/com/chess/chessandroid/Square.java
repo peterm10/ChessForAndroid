@@ -22,7 +22,7 @@ public class Square extends ImageView implements OnTouchListener{
     private int backgroundColor;
     public boolean empty;
    
-    Square(int y, int x, ChessBoard b, Context c) {
+    public Square(int y, int x, ChessBoard b, Context c) {
         super(c);
         mContext = c;
                

@@ -54,7 +54,8 @@ public class MainActivity extends Activity implements Constants {
         init();
         playNewGame();
     }
-    @Override
+    @SuppressWarnings("static-access")
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
     	MenuItem itemNew = menu.add(0, MENU_NEW, Menu.NONE, "Nowa Gra");
@@ -95,7 +96,7 @@ public class MainActivity extends Activity implements Constants {
             return false;
     }
 
-    private void init() {
+    public void init() {
             chessView = new ChessBoard(this);
             status = chessView.status;
            // setMaxTime(5000);
@@ -130,7 +131,8 @@ public class MainActivity extends Activity implements Constants {
     }
     private void nextMove() {
     }
-    public void pieceChange(MoveBase mo) {
+    @SuppressWarnings("rawtypes")
+	public void pieceChange(MoveBase mo) {
         MoveBase move = mo;
         if (move == null)
                 return;
@@ -194,7 +196,8 @@ public class MainActivity extends Activity implements Constants {
         statusStr = "Status: " + s;
         handler.post(doShowStatus);
     }
-    private void setMove(Move m) {
+    @SuppressWarnings("rawtypes")
+	private void setMove(Move m) {
         curMove = m;
         handler.post(doMakeMove);
     }
@@ -208,7 +211,8 @@ public class MainActivity extends Activity implements Constants {
         handler.post(doSwitchMoveMarkers);
         showStatus("");
     }
-    private boolean isResult() {
+    @SuppressWarnings("rawtypes")
+	private boolean isResult() {
         Collection validMoves = board.gen();
 
         Iterator i = validMoves.iterator();
@@ -248,7 +252,8 @@ public class MainActivity extends Activity implements Constants {
         searcher.think(this);
     }
     final class Thinker extends Thread {
-        @Override
+        @SuppressWarnings("rawtypes")
+		@Override
         public void run() {
                 think();
                 if (searcher.isStopped())
@@ -292,7 +297,8 @@ public class MainActivity extends Activity implements Constants {
                                         });
         alert1.show();
     }
-    private void makeMove(Move m) {
+    @SuppressWarnings("rawtypes")
+	private void makeMove(Move m) {
         int from = m.getFrom();
         int to = m.getTo();
         if (m.promote != 0) {

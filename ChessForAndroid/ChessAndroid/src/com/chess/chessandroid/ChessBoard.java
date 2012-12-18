@@ -161,7 +161,7 @@ public class ChessBoard {
             status.setTextColor(0xff00ff00);
             status.setBackgroundColor(0xff000000);
         }
-        private void loadImages() {
+        public void loadImages() {
             for (int i = 0; i < 2; i++) {
             	for (int j = 0; j < 6; j++)
             		pieceImage[i][j] = mActivity.getResources().getDrawable(imageFilename[i][j]);
