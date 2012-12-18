@@ -1,9 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Piotr\ProjektIO\Repo_IO\.metadata\.plugins\org.eclipse.jdt.core
-167591004.index
-3186776070.index
-3105448079.index
-3563840985.index
-4268499433.index
-453941340.index
-3914631414.index
-771501293.index
