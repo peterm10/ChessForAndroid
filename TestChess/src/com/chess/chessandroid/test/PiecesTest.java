@@ -3,25 +3,29 @@ package com.chess.chessandroid.test;
 import com.chess.chessandroid.Board;
 import com.chess.chessandroid.ChessBoard;
 import com.chess.chessandroid.MainActivity;
+import com.chess.chessandroid.Move;
+import com.chess.chessandroid.MoveTest;
 import com.chess.chessandroid.Search;
 import com.chess.chessandroid.Square;
 import com.jayway.android.robotium.solo.Solo;
-
 
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.MotionEvent;
+import android.widget.TextView;
 
 public class PiecesTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private MainActivity mActivity = new MainActivity();
+	private MainActivity mActivity;
 	private Board board;
-	private ChessBoard chessView;
+	private ChessBoard chessViewTest;
+	private Move mov;
 	private Solo solo;
 	private static Drawable[][] pieceImage = new Drawable[2][6];
 	private Search searcher = new Search();
-	
+	private TextView status;
+    
 	   
 	@SuppressWarnings("deprecation")
 	public PiecesTest(){
@@ -73,5 +77,27 @@ public class PiecesTest extends ActivityInstrumentationTestCase2<MainActivity> {
 		}				 
 		
 	}
+	public void testSprawdzaniaNIEwSzachu(){
+		mActivity = getActivity();
+		assertNotNull(mActivity);
+		board = new Board();
+		assertEquals(false, board.inCheck(0));
+	}
+	public void testSprawdzaniaJestwSzachu(){
+		mActivity = getActivity();
+		assertNotNull(mActivity);
+		int side = 1;
+		board = new Board();
+		//assertEquals(true, board.inCheck(side));
+	}
+	public void testAttack(){
+		mActivity = getActivity();
+		assertNotNull(mActivity);
+		int side = 1;
+		board = new Board();
+		//atakowany na czarnym polu F1
+		assertEquals(false, board.attack(61, 1));
+	}
+	
 
 }
