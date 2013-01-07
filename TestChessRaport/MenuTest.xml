@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MenuTest" project="TestChess" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="Android [emulator-5554]" time="17.099">
+    <testsuite name="com.chess.chessandroid.test.MenuTest" time="17.099">
+      <testcase name="testApp " classname="com.chess.chessandroid.test.MenuTest" time="3.843"/>
+      <testcase name="testMenu1 " classname="com.chess.chessandroid.test.MenuTest" time="6.85"/>
+      <testcase name="testMenu2 " classname="com.chess.chessandroid.test.MenuTest" time="6.406"/>
+    </testsuite>
+  </testsuite>
+</testrun>

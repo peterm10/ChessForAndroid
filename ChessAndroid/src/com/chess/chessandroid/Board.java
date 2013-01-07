@@ -22,7 +22,7 @@ final static int ROOK_ON_SEVENTH_BONUS = 20;
 
 final static int HIST_STACK = 800;// zzn 400;
 
-int side = LIGHT;
+public int side = LIGHT;
 int xside = DARK;
 private int castle = 15;
 private int ep = -1;
@@ -30,11 +30,11 @@ int fifty = 0;
 private int hply = 0;
 int history[][] = new int[64][64];
 private HistoryData histDat[] = new HistoryData[HIST_STACK];
-private int pawnRank[][] = new int [2][10];
+public int pawnRank[][] = new int [2][10];
 private int pieceMat[] = { 3100, 3100 };
 private int pawnMat[] = new int[2];
        
-private int color[] =  {
+public int color[] =  {
         1, 1, 1, 1, 1, 1, 1, 1,
         1, 1, 1, 1, 1, 1, 1, 1,
         6, 6, 6, 6, 6, 6, 6, 6,
@@ -45,7 +45,7 @@ private int color[] =  {
         0, 0, 0, 0, 0, 0, 0, 0
 };
        
-private int piece[] =  {
+public int piece[] =  {
     3, 1, 2, 4, 5, 2, 1, 3,
     0, 0, 0, 0, 0, 0, 0, 0,
     6, 6, 6, 6, 6, 6, 6, 6,
@@ -114,14 +114,11 @@ long pawnBits[] = { 0x00ff000000000000L, 0xff00L };
             13, 15, 15, 15, 12, 15, 15, 14
     };
 
-    /* the values of the pieces */
     private final static int pieceValue[] = {
             100, 300, 300, 500, 900, 0
     };    
 
-/* The "pcsq" arrays are piece/square tables. They're values
-added to the material value of the piece based on the
-location of the piece. */
+/* po³ozeniw pionka*/
 
     private final static int pawnPcsq[] = {
             0,   0,   0,   0,   0,   0,   0,   0,
@@ -274,7 +271,7 @@ public boolean attack(int sq, int s) {
  * pozycje na stosie ruchów
  * genPush */
 
-List gen() {
+public List gen() {
             List ret = new ArrayList();    
    
             long emptySlots = ~(pieceBits[LIGHT] | pieceBits[DARK]);
@@ -398,7 +395,7 @@ List gen() {
  * nie generuje tylko rejestruje i porównuje ruchy
  * jest generowany przez quiescence search. */
 
- List genCaps() {
+public List genCaps() {
             List ret = new ArrayList();
 
             if (side == LIGHT) {
@@ -518,7 +515,7 @@ List gen() {
  
  /* makemove() wykonaj ruch. Jesli ruch jest z³y to 
   * zwraca false i cofa ruch w przeciwnym racie true*/      
- boolean makeMove(Move m) {
+ public boolean makeMove(Move m) {
             long oldBits[] = { pieceBits[LIGHT], pieceBits[DARK] };
 
             int from, to;
@@ -829,7 +826,6 @@ do tego sprytnego algorytmu. */
                     }
                     oldPawnBits = pawnBits[LIGHT] | pawnBits[DARK];
             }
-            /* this is the second pass: evaluate each piece */
             score[LIGHT] = pieceMat[LIGHT] + pawnMat[LIGHT];
             score[DARK] = pieceMat[DARK] + pawnMat[DARK];
             for (int i = 0; i < 64; ++i) {
@@ -903,13 +899,13 @@ do tego sprytnego algorytmu. */
             return score[DARK] - score[LIGHT];
     }  
  
- int evalLightPawn(int sq) {
+ public int evalLightPawn(int sq) {
             int r = 0; /* zwróc wartosc */
-            int f = COL(sq) + 1; /* zwróc dane */
+            int f = COL(sq) + 1; /* zwróc dane która kolumna*/
 
             r += pawnPcsq[sq];
 
-            /* jeœli jest pionkiem za ten jeden, to podwojona */
+            /* jeœli jest pionkiem */
             if (pawnRank[LIGHT][f] > ROW(sq))
                     r -= DOUBLED_PAWN_PENALTY;
 
@@ -1088,6 +1084,6 @@ private int getLBit(long y) {
     return c + shift;
 }
 
-static int COL(int x) { return (x & 7); }
-static int ROW(int x) { return (x >> 3); }  
+public static int COL(int x) { return (x & 7); }
+public static int ROW(int x) { return (x >> 3); }  
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PiecesTest" project="TestChess" tests="9" started="9" failures="0" errors="0" ignored="0">
+  <testsuite name="Android [emulator-5554]" time="23.506">
+    <testsuite name="com.chess.chessandroid.test.PiecesTest" time="23.506">
+      <testcase name="testApp " classname="com.chess.chessandroid.test.PiecesTest" time="3.444"/>
+      <testcase name="testAttack " classname="com.chess.chessandroid.test.PiecesTest" time="2.481"/>
+      <testcase name="testCol " classname="com.chess.chessandroid.test.PiecesTest" time="2.73"/>
+      <testcase name="testInit " classname="com.chess.chessandroid.test.PiecesTest" time="2.429"/>
+      <testcase name="testPawn " classname="com.chess.chessandroid.test.PiecesTest" time="2.353"/>
+      <testcase name="testPieces " classname="com.chess.chessandroid.test.PiecesTest" time="2.226"/>
+      <testcase name="testROW " classname="com.chess.chessandroid.test.PiecesTest" time="2.305"/>
+      <testcase name="testSprawdzaniaJestwSzachu " classname="com.chess.chessandroid.test.PiecesTest" time="2.215"/>
+      <testcase name="testSprawdzaniaNIEwSzachu " classname="com.chess.chessandroid.test.PiecesTest" time="3.323"/>
+    </testsuite>
+  </testsuite>
+</testrun>

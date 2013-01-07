@@ -59,7 +59,7 @@ public final class Search {
                                         break;
                         }
                 } catch (StopSearchingException e) {
-                        /* make sure to take back the line we were searching */
+                        /* sprawdzanie czy tutaj by³o szukane */
                         while (ply != 0) {
                                 board.takeBack();
                                 --ply;
@@ -69,12 +69,11 @@ public final class Search {
                 return;
         }
 
-        /** search() does just that, in negascout fashion */
+        /** search() */
 
         int search(int alpha, int beta, int depth) throws StopSearchingException {
                 /*
-                 * we're as deep as we want to be; call quiesce() to get a reasonable
-                 * score and return it.
+                 * zwróciæ pste pole.
                  */
                 if (depth == 0)
                         return quiesce(alpha, beta);
@@ -84,30 +83,28 @@ public final class Search {
                 }
 
                 /*
-                 * if this isn't the root of the search tree (where we have to pick a
-                 * move and can't simply return 0) then check to see if the position is
-                 * a repeat. if so, we can assume that this line is a draw and return 0.
+                 * szukamy od pocz¹tku (gdzie mamy postawiony pionek i zwraca 0
+                 * sprawdzanie czy pozycja siê powtórzy³a jeœli tak to jest remis i zwraca 0
                  */
                 if ((ply > 0) && (board.reps() > 0))
                         return 0;
 
-                /* are we too deep? */
+                /* jak daleko jesteœmy? */
                 if (ply >= MAX_PLY - 1)
                         return board.eval();
                 /*
-                 * if (hply >= HIST_STACK - 1) return board.eval(); FIXME!!! We could in
-                 * principle overflow the move history stack.
+                 * if (hply >= HIST_STACK - 1) return board.eval(); przepe³nienie stosu historii
                  */
-                /* are we in check? if so, we want to search deeper */
+                /* jeœli sprawdzony szukamy dalej */
                 boolean check = board.inCheck(board.side);
                 if (check)
                         ++depth;
                 List validMoves = board.gen();
-                if (followPV) /* are we following the PV? */
+                if (followPV) /* po PV? */
                         sortPV(validMoves);
                 Collections.sort(validMoves);
 
-                /* loop through the moves */
+                /* poruszanie w pêtli */
                 boolean foundMove = false;
                 Iterator i = validMoves.iterator();
                 int a = alpha;
@@ -119,7 +116,7 @@ public final class Search {
                                 continue;
                         ++ply;
                         ++nodes;
-                        /* do some housekeeping every 1024 nodes */
+                        /* czyszczenie historii */
                         if ((nodes & 1023) == 0)
                                 checkup();
 
@@ -140,15 +137,11 @@ public final class Search {
                                 betterMove = true;
                         }
                         if (betterMove) {
-                                /*
-                                 * this move caused a cutoff, so increase the history value so
-                                 * it gets ordered high next time we can search it
-                                 */
+                                
                                 board.history[m.getFrom()][m.getTo()] += depth;
                                 if (x >= beta)
                                         return beta;
 
-                                /* update the PV */
                                 pv[ply][ply] = m;
                                 for (int j = ply + 1; j < pvLength[ply + 1]; ++j)
                                         pv[ply][j] = pv[ply + 1][j];
@@ -158,7 +151,7 @@ public final class Search {
                         first = false;
                 }
 
-                /* no legal moves? then we're in checkmate or stalemate */
+                /* prawid³owy ruch? wtedy mamy mate lup remis */
                 if (!foundMove) {
                         if (check)
                                 return -10000 + ply;
@@ -166,42 +159,32 @@ public final class Search {
                                 return 0;
                 }
 
-                /* fifty move draw rule */
+                /* koniec po 50 ruchach*/
                 if (board.fifty >= 100)
                         return 0;
                 return a;
         }
 
         /*
-         * quiesce() is a recursive minimax search function with alpha-beta cutoffs.
-         * In other words, negamax. It basically only searches capture sequences and
-         * allows the evaluation function to cut the search off (and set alpha). The
-         * idea is to find a position where there isn't a lot going on so the static
-         * evaluation function will work.
+         * quiesce() rekurencyjna funkcja wyszukiwania miejscza gdzie nie ma ruchu
          */
 
         int quiesce(int alpha, int beta) throws StopSearchingException {
                 pvLength[ply] = ply;
 
-                /* are we too deep? */
                 if (ply >= MAX_PLY - 1)
                         return board.eval();
-                /*
-                 * if (hply >= HIST_STACK - 1) return board.eval(); FIXME!! see above
-                 */
-                /* check with the evaluation function */
-                int x = board.eval();
+                 int x = board.eval();
                 if (x >= beta)
                         return beta;
                 if (x > alpha)
                         alpha = x;
 
                 List validCaptures = board.genCaps();
-                if (followPV) /* are we following the PV? */
+                if (followPV) 
                         sortPV(validCaptures);
                 Collections.sort(validCaptures);
 
-                /* loop through the moves */
                 Iterator i = validCaptures.iterator();
                 while (i.hasNext()) {
                         Move m = (Move) i.next();
@@ -210,7 +193,6 @@ public final class Search {
                         ++ply;
                         ++nodes;
 
-                        /* do some housekeeping every 1024 nodes */
                         if ((nodes & 1023) == 0)
                                 checkup();
 
@@ -223,7 +205,6 @@ public final class Search {
                                         return beta;
                                 alpha = x;
 
-                                /* update the PV */
                                 pv[ply][ply] = m;
                                 for (int j = ply + 1; j < pvLength[ply + 1]; ++j)
                                         pv[ply][j] = pv[ply + 1][j];
@@ -234,14 +215,10 @@ public final class Search {
         }
 
         /*
-         * sortPV() is called when the search function is following the PV
-         * (Principal Variation). It looks through the current ply's move list to
-         * see if the PV move is there. If so, it adds 10,000,000 to the move's
-         * score so it's played first by the search function. If not, followPV
-         * remains FALSE and search() stops calling sortPV().
+         * sortPV() g³ówne zmiany na planszy
          */
 
-        void sortPV(Collection moves) {
+        public void sortPV(Collection moves) {
                 followPV = false;
                 if (pv[0][ply] == null)
                         return;
@@ -256,13 +233,10 @@ public final class Search {
                 }
         }
 
-        /* checkup() is called once in a while during the search. */
+        /* checkup()  */
 
-        void checkup() throws StopSearchingException {
-                /*
-                 * is the engine's time up? if so, longjmp back to the beginning of
-                 * think()
-                 */
+        public void checkup() throws StopSearchingException {
+                
                
                 if (System.currentTimeMillis() >= stopTime || stop) {
                         throw new StopSearchingException();
@@ -277,7 +251,7 @@ public final class Search {
         protected Board board = new Board();
         private Move pv[][] = new Move[MAX_PLY][MAX_PLY];
         private int pvLength[] = new int[MAX_PLY];
-        private boolean followPV;
+        public boolean followPV;
         private int ply = 0;
         private int nodes = 0;
         private long stopTime = Long.MAX_VALUE;
