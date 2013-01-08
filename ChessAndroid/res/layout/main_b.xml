@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:stretchColumns="*"
+    tools:ignore="HardcodedText" >
+
+    <TableRow>
+
+        <TextView
+            android:layout_column="1"
+            android:gravity="center"
+            android:padding="3dip"
+            android:text="a" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="b" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="c" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="d" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="e" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="f" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="g" />
+
+        <TextView
+            android:padding="3dip"
+            android:text="h" />
+    </TableRow>
+
+    <TableRow>
+
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:stretchColumns="*" >
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="8" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="7" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="6" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="5" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="4" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="3" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="2" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:padding="3dip"
+                    android:text="1" />
+            </TableRow>
+        </TableLayout>
+
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnWidth="50dp"
+            android:gravity="right"
+            android:horizontalSpacing="0dp"
+            android:numColumns="auto_fit"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="0dp" />
+    </TableRow>
+
+</TableLayout>
