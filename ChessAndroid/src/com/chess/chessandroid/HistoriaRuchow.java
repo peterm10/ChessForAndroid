@@ -2,11 +2,12 @@ package com.chess.chessandroid;
 
 
 final class HistoriaRuchow {
-    Ruchy m;
-int capture;
-int wieza;
-int ep;
-int fifty;
-long[] bitPionka;
-long[] bitulozeniePionkow;  
+	int wieza;
+	int ep;
+	@SuppressWarnings("rawtypes")
+	Ruchy m;
+	int zwyciestwo;
+	int fifty;
+	long[] bitPionka;
+	long[] bitulozeniePionkow;  
 }

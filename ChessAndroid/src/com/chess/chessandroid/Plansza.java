@@ -1,5 +1,6 @@
 package com.chess.chessandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,21 +14,27 @@ import android.widget.ImageView;
 
 
 
+@SuppressLint("ViewConstructor")
+@SuppressWarnings("unused")
 public class Plansza extends ImageView implements OnTouchListener{
+    
+	private Context mContext;
+    private int backgroundColor;
+    
     private final int x;
     private final int y;
+    
     private final BoardGameChess board;
-    private Context mContext;
+    
     public boolean select = false;
-    private int backgroundColor;
     public boolean empty;
    
     public Plansza(int y, int x, BoardGameChess b, Context c) {
         super(c);
-        mContext = c;
                
         this.x = x;
         this.y = y;
+        mContext = c;
         board = b;
        
         this.setAdjustViewBounds(true);
@@ -49,31 +56,41 @@ public class Plansza extends ImageView implements OnTouchListener{
        
         empty = true;
     }
-   
-    public void setIcon(Drawable d) {  
+    public Drawable getIcon() {
+        return this.getDrawable();
+    }
+    @Override
+    protected void onDraw(Canvas canvas) {
+            // TODO Auto-generated method stub
+            super.onDraw(canvas);
+    }
+    public void ustawSzachownice(boolean select) {
+        if (select) {                  
+                if (backgroundColor == 0)
+                        this.setBackgroundResource(R.drawable.white_h);
+                else
+                        this.setBackgroundResource(R.drawable.black_h);                
+        } else {                        
+                if (backgroundColor == 0)
+                        this.setBackgroundResource(R.drawable.white);
+                else
+                        this.setBackgroundResource(R.drawable.black);
+        }                              
+}
+    public void ustawImg(Drawable d) {  
         if (d != null)
                 this.setImageDrawable(d);
         else {
                 this.setImageDrawable(this.getBackground());                    
-                /*
-                if (backgroundColor == 0)
-                        this.setImageResource(R.drawable.white);
-                else
-                        this.setImageResource(R.drawable.black);
-                */                      
-        }
+           }
     }
    
-    public Drawable getIcon() {
-        return this.getDrawable();
-    }
-       
-        public boolean onTouch(View v, MotionEvent event) {            
+    public boolean onTouch(View v, MotionEvent event) {            
                 switch(event.getAction()) {
                 case MotionEvent.ACTION_UP:                    
                         break;
                 case MotionEvent.ACTION_DOWN:                                          
-                        board.selected(y, x, empty);
+                        board.wybierzPozycje(y, x, empty);
                         break;
                 case MotionEvent.ACTION_MOVE:                  
                         break;
@@ -83,24 +100,8 @@ public class Plansza extends ImageView implements OnTouchListener{
                 return false;
         }
        
-        public void setSelect(boolean select) {
-                if (select) {                  
-                        if (backgroundColor == 0)
-                                this.setBackgroundResource(R.drawable.white_h);
-                        else
-                                this.setBackgroundResource(R.drawable.black_h);                
-                } else {                        
-                        if (backgroundColor == 0)
-                                this.setBackgroundResource(R.drawable.white);
-                        else
-                                this.setBackgroundResource(R.drawable.black);
-                }                              
-        }
+        
        
-        @Override
-        protected void onDraw(Canvas canvas) {
-                // TODO Auto-generated method stub
-                super.onDraw(canvas);
-        }
+        
 }
 

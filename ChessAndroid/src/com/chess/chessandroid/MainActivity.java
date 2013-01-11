@@ -17,173 +17,175 @@ import android.widget.TextView;
 
 @SuppressWarnings("unused")
 public class MainActivity extends Activity implements Sta³eConst {
-	private BoardGame board = new BoardGame();
-    private PrzeszukajPlansze searcher = new PrzeszukajPlansze();
-    private BoardGameChess chessView;
-    private int computerSide = DARK;
-    private final int moves = 0;
-    private int maxTime = 5000;
-    private Thread thinkThread = null;
+	
+	private PrzeszukajPlansze szukaj = new PrzeszukajPlansze();
+    private BoardGame board = new BoardGame();
+    private BoardGameChess chessBoardView;
+    private Thread czekajWatek = null;
     @SuppressWarnings("rawtypes")
-	private Ruchy guessedMove = null;
-
+	private Ruchy ruchyG = null;
     private TextView status;
     private String statusStr = "";
-    @SuppressWarnings("rawtypes")
-	private Ruchy curMove = null;
-    private boolean whiteToMove = true;
-    private boolean whiteMoved = true;
     private String moveStr;
-
+    @SuppressWarnings("rawtypes")
+	private Ruchy prawidlowyRuch = null;
+    
+    private int maxCzasCzekania = 5000;
+    private int czarnyPC = CZARNE;
+    
+    private boolean bialyPrzesunienty = true;
+    private boolean bialyRuch = true;
+    
+    private final int ruchyPionka = 0;//moves
     private final Handler handler = new Handler();
 
-    static final private int MENU_NEW = Menu.FIRST;
-    static final private int MENU_NEXT = MENU_NEW + 1;
-    static final private int MENU_GROUP_SKILL = 1;
+    static final private int MENUNEW = Menu.FIRST;
+    static final private int MENUNEXT = MENUNEW + 1;
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        init();
-        playNewGame();
+        chessGameStart();
+        newGame();
     }
     @SuppressWarnings("static-access")
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
-    	MenuItem itemNew = menu.add(0, MENU_NEW, Menu.NONE, "Nowa Gra");
-       MenuItem itemNext = menu.add(0, this.MENU_NEXT, Menu.NONE, "Nastêpny ruch");
-       itemNew.setIcon(null);
+    	MenuItem gameNew = menu.add(0, MENUNEW, Menu.NONE, "Nowa Gra");
+    	MenuItem gameNext = menu.add(0, this.MENUNEXT, Menu.NONE, "Nastêpny ruch");
+    	gameNew.setIcon(null);
       return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
-            case MENU_NEW:
-                    init();
-                    playNewGame();
+            case MENUNEW:
+            	chessGameStart();
+            	newGame();
                     return true;
-            case MENU_NEXT:
-                    nextMove();
+            case MENUNEXT:
+               //     nextMove();
                     return true;
             }
             return false;
     }
 
-    public void init() {
-            chessView = new BoardGameChess(this);
-            status = chessView.status;
+    public void chessGameStart() {
+    	chessBoardView = new BoardGameChess(this);
+        status = chessBoardView.status;
     }
-    public void playNewGame() {
+    public void newGame() {
             stop();
-            computerSide = DARK;
-            guessedMove = null;
-            searcher = new PrzeszukajPlansze();
+            czarnyPC = CZARNE;
+            ruchyG = null;
+            szukaj = new PrzeszukajPlansze();
             board = new BoardGame();
-            chessView.setupBoard();
+            chessBoardView.ladujPlansze();
     }
     public void stop() {
-            searcher.stopThinking();
+    	szukaj.koniecOczekiwania();
     }
-    private void nextMove() {
-    }
+    //private void nextMove() {}
+    
     @SuppressWarnings("rawtypes")
-	public void pieceChange(RuchyPodstawowe mo) {
+	public void zmienPozycje(RuchyPodstawowe mo) {
         RuchyPodstawowe move = mo;
         if (move == null)
                 return;
-        int promote = 0;
-        int to = move.getTo();
-        int from = move.getFrom();
-        if ((((to < 8) && (board.side == LIGHT)) || ((to > 55) && (board.side == DARK)))
-                        && (board.getPionek(from) == PAWN)) {
-                promote = chessView.promotionDialog(board.side == LIGHT);
+        int wyrozniaj = 0;
+        int ruchDo = move.getDo();
+        int rychOd = move.getOd();
+        if ((((ruchDo < 8) && (board.bialy == BIALE)) || ((ruchDo > 55) && (board.bialy == CZARNE)))
+                        && (board.getPionek(rychOd) == PIONEK)) {
+        	wyrozniaj = chessBoardView.wyroznijOkno(board.bialy == BIALE);
         }
-        boolean found = false;
+        boolean znajdz = false;
         Collection validMoves = board.generujRuch();
         Iterator i = validMoves.iterator();
         Ruchy m = null;
         while (i.hasNext()) {
                 m = (Ruchy) i.next();
-                if (m.getFrom() == from && m.getTo() == to && m.promote == promote) {
-                        found = true;
+                if (m.getOd() == rychOd && m.getDo() == ruchDo && m.wyroznij == wyrozniaj) {
+                	znajdz = true;
                         break;
                 }
         }
-        if (!found || !board.wykonajRuch(m)) {
-                showStatus("Nie mo¿na wykonaæ ruchu!");
-                chessView.setHighlight(mo.getFromRow(), mo.getFromCol(), false);
-                chessView.setMoving(false);
+        if (!znajdz || !board.wykonajRuch(m)) {
+        	pokazStatus("Nie mo¿na wykonaæ ruchu!");
+                chessBoardView.setPodswietlenie(mo.getOdWier(), mo.getOdKolumn(), false);
+                chessBoardView.setPrzesun(false);
         } else {
-                setMove(m);
-                showMove(m.toString(), board.side == DARK);
-                switchMoveMarkers(board.side == LIGHT);
+        	setRuchy(m);
+        	pokazRuchy(m.toString(), board.bialy == CZARNE);
+        	zmienZnacznikRuchu(board.bialy == BIALE);
 
-                if (isResult())
+                if (wynikRuchow())
                         return;
 
-                if (board.side == computerSide) {
-                        if (guessedMove != null) {
-                                if (!m.equals(guessedMove)) {
-                                        searcher.stopThinking();
+                if (board.bialy == czarnyPC) {
+                        if (ruchyG != null) {
+                                if (!m.equals(ruchyG)) {
+                                	szukaj.ponownieOczekuj();
                                         try {
-                                                thinkThread.join();
+                                        	czekajWatek.join();
                                         } catch (InterruptedException ignore) {
 
                                         }
-                                        searcher.restartThinking();
-                                        searcher.board.cofnijRuch();
-                                        searcher.board.wykonajRuch(m);
-                                        searcher.clearPV();
-                                        thinkThread = new Thinker();
-                                        thinkThread.start();
+                                        szukaj.ponownieOczekuj();
+                                        szukaj.board.cofnijRuch();
+                                        szukaj.board.wykonajRuch(m);
+                                        szukaj.wyczyscRuchyPV();
+                                        czekajWatek = new SzukajRozwiazania();
+                                        czekajWatek.start();
                                 }
                         } else {
-                                searcher.clearPV();
-                                searcher.board.wykonajRuch(m);
-                                thinkThread = new Thinker();
-                                thinkThread.start();
+                        	szukaj.wyczyscRuchyPV();
+                        	szukaj.board.wykonajRuch(m);
+                        	czekajWatek = new SzukajRozwiazania();
+                            czekajWatek.start();
                         }
-                        searcher.setStopTime(System.currentTimeMillis() + maxTime);
+                        szukaj.setZaczymajOdliczanie(System.currentTimeMillis() + maxCzasCzekania);
                 }
         }
     }
-    public void showStatus(String s) {
+    public void pokazStatus(String s) {
         statusStr = "Status: " + s;
-        handler.post(doShowStatus);
+        handler.post(pokazStatusRunnable);
     }
     @SuppressWarnings("rawtypes")
-	private void setMove(Ruchy m) {
-        curMove = m;
-        handler.post(doMakeMove);
+	private void setRuchy(Ruchy m) {
+    	prawidlowyRuch = m;
+        handler.post(wykonajRuchRunnable);
     }
-    private void showMove(String move, boolean b) {
+    private void pokazRuchy(String move, boolean b) {
         moveStr = move;
-        whiteMoved = b;
-        handler.post(doShowMove);
+        bialyRuch = b;
+        handler.post(pokazRuchyRunnable);
     }
-    private void switchMoveMarkers(boolean b) {
-        whiteToMove = b;
-        handler.post(doSwitchMoveMarkers);
-        showStatus("");
+    private void zmienZnacznikRuchu(boolean b) {
+    	bialyPrzesunienty = b;
+        handler.post(wybierzZnacznikRuchuRunnable);
+        pokazStatus("");
     }
     @SuppressWarnings("rawtypes")
-	private boolean isResult() {
+	private boolean wynikRuchow() {
         Collection validMoves = board.generujRuch();
 
         Iterator i = validMoves.iterator();
-        boolean found = false;
+        boolean znajdz = false;
         while (i.hasNext()) {
                 if (board.wykonajRuch((Ruchy) i.next())) {
                         board.cofnijRuch();
-                        found = true;
+                        znajdz = true;
                         break;
                 }
         }
         String message = null;
-        if (!found) {
-                if (board.sprawdzAtak(board.side)) {
-                        if (board.side == LIGHT)
+        if (!znajdz) {
+                if (board.sprawdzAtak(board.bialy)) {
+                        if (board.bialy == BIALE)
                                 message = "0 - 1 Czarny Mat";
                         else
                                 message = "1 - 0 Bia³y Mat";
@@ -194,50 +196,50 @@ public class MainActivity extends Activity implements Sta³eConst {
         else if (board.fifty >= 100)
                 message = "1/2 - 1/2 Remis po 50 ruchach";
         if (message != null) {
-                showStatus(message);
+        	pokazStatus(message);
                 // TODO option for start a new game
-                searcher.stopThinking();
-                setChoice4NewGame();
+                szukaj.ponownieOczekuj();
+                wybierz2NewGame();
                 return true;
         }
-        if (board.sprawdzAtak(board.side))
-                showStatus("Sprawdzam!");
+        if (board.sprawdzAtak(board.bialy))
+        	pokazStatus("Sprawdzam!");
         return false;
     }
-    private void think() {
-        searcher.think(this);
+    private void oczekuj() {
+    	szukaj.oczekujKlasaSzukaj(this);
     }
-    final class Thinker extends Thread {
+    final class SzukajRozwiazania extends Thread {
         @SuppressWarnings("rawtypes")
 		@Override
         public void run() {
-                think();
-                if (searcher.isStopped())
+        	oczekuj();
+                if (szukaj.zatrzymajOczekiwanie())
                         return;
-                final Ruchy best = searcher.getBest();
+                final Ruchy best = szukaj.getNajlepszyRuch();
                 if (best == null) {
-                        showStatus("Z³y ruch");
-                        computerSide = EMPTY;
+                	pokazStatus("Z³y ruch");
+                        czarnyPC = PUSTE;
                         return;
                 }
                 board.wykonajRuch(best);
-                searcher.board.wykonajRuch(best);
-                showMove(best.toString(), board.side == DARK);
-                setMove(best);
-                switchMoveMarkers(board.side == LIGHT);
-                isResult();
-                chessView.setMoving(false);
+                szukaj.board.wykonajRuch(best);
+                pokazRuchy(best.toString(), board.bialy == CZARNE);
+                setRuchy(best);
+                zmienZnacznikRuchu(board.bialy == BIALE);
+                wynikRuchow();
+                chessBoardView.setPrzesun(false);
                 
         }
 	}
-    private void choice4NewGame() {
+    private void wybierzNewGame() {
         AlertDialog.Builder alert1 = new AlertDialog.Builder(this).setTitle(
                         "Koniec Gry").setMessage("Chcesz rozpocz¹æ now¹ gre?")
                         .setPositiveButton("Tak",
                                         new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog,
                                                                 int whichButton) {
-                                                        playNewGame();
+                                                	newGame();
                                                 }
                                         }).setNegativeButton("Nie",
                                         new DialogInterface.OnClickListener() {
@@ -249,56 +251,56 @@ public class MainActivity extends Activity implements Sta³eConst {
         alert1.show();
     }
     @SuppressWarnings("rawtypes")
-	private void makeMove(Ruchy m) {
-        int from = m.getFrom();
-        int to = m.getTo();
-        if (m.promote != 0) {
-                chessView.makeMoveWithPromote(m, m.promote, board.side != LIGHT);
+	private void wykonajRuch(Ruchy m) {
+        int rychOd = m.getOd();
+        int ruchDo = m.getDo();
+        if (m.wyroznij != 0) {
+        	chessBoardView.wykinajRuchBialymWyroznij(m, m.wyroznij, board.bialy != BIALE);
         } else {
                 if ((m.bits & 2) != 0) {
-                        if (from == E1 && to == G1)
-                                chessView.makeMove(new RuchyPodstawowe(H1, F1));
-                        else if (from == E1 && to == C1)
-                                chessView.makeMove(new RuchyPodstawowe(A1, D1));
-                        else if (from == E8 && to == G8)
-                                chessView.makeMove(new RuchyPodstawowe(H8, F8));
-                        else if (from == E8 && to == C8)
-                                chessView.makeMove(new RuchyPodstawowe(A8, D8));
+                        if (rychOd == E1 && ruchDo == G1)
+                        	chessBoardView.wykinajRuch(new RuchyPodstawowe(H1, F1));
+                        else if (rychOd == E1 && ruchDo == C1)
+                        	chessBoardView.wykinajRuch(new RuchyPodstawowe(A1, D1));
+                        else if (rychOd == E8 && ruchDo == G8)
+                        	chessBoardView.wykinajRuch(new RuchyPodstawowe(H8, F8));
+                        else if (rychOd == E8 && ruchDo == C8)
+                        	chessBoardView.wykinajRuch(new RuchyPodstawowe(A8, D8));
                 } else if ((m.bits & 4) != 0) {
-                        if (board.xside == LIGHT)
-                                chessView.clear(m.getToRow() + 1, m.getToCol());
+                        if (board.czarny == BIALE)
+                        	chessBoardView.wyczysc(m.getDoWierszy() + 1, m.getDoKolumn());
                         else
-                                chessView.clear(m.getToRow() - 1, m.getToCol());
+                        	chessBoardView.wyczysc(m.getDoWierszy() - 1, m.getDoKolumn());
                 }
-                chessView.makeMove(m);
+                chessBoardView.wykinajRuch(m);
         }
     }
-	private final Runnable doShowMove = new Runnable() {
+	private final Runnable pokazRuchyRunnable = new Runnable() {
             public void run() {
-                    chessView.showMove(moveStr, whiteMoved);
+            	chessBoardView.pokazRuch(moveStr, bialyRuch);
             }
 	};
-	private void setChoice4NewGame() {
-        handler.post(doChoice4NewGame);
+	private void wybierz2NewGame() {
+        handler.post(wybierzNewGameRunnable);
 	}
-	private final Runnable doShowStatus = new Runnable() {
+	private final Runnable pokazStatusRunnable = new Runnable() {
         public void run() {
                 status.setText(statusStr);
         }
 	};
-	private final Runnable doMakeMove = new Runnable() {
+	private final Runnable wykonajRuchRunnable = new Runnable() {
         public void run() {
-                makeMove(curMove);
+        	wykonajRuch(prawidlowyRuch);
         }
 	};
-	private final Runnable doSwitchMoveMarkers = new Runnable() {
+	private final Runnable wybierzZnacznikRuchuRunnable = new Runnable() {
         public void run() {
-                chessView.switchMoveMarkers(whiteToMove);
+        	chessBoardView.zmienZnacznikRuchu(bialyPrzesunienty);
         }
 	};
-	private final Runnable doChoice4NewGame = new Runnable() {
+	private final Runnable wybierzNewGameRunnable = new Runnable() {
         public void run() {
-                choice4NewGame();
+        	wybierzNewGame();
         }
 	};
     }

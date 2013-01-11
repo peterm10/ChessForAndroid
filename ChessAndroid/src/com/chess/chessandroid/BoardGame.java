@@ -12,16 +12,17 @@ public final class BoardGame implements Sta³eConst, Cloneable {
             return super.clone();
     }
 
-    public int side = LIGHT;
-    public int xside = DARK;
+    public int bialy = BIALE;
+    public int czarny = CZARNE;
     private int hply = 0;
     private int wieza = 15;
     private int ep = -1;
     private int matP[] = { 3100, 3100 };
-    private int pawnMat[] = new int[2];
-    private HistoriaRuchow histDat[] = new HistoriaRuchow[HISSTACK];
+    private int matPionek[] = new int[2];
     
     final static int HISSTACK = 800;// zzn 400;
+    private HistoriaRuchow histDat[] = new HistoriaRuchow[HISSTACK];
+    
     final static int PAWNPENALTY10 = 10;
     final static int PAWNPENALTY20 = 20;
     final static int PAWNPENALTY8 = 8;
@@ -29,14 +30,25 @@ public final class BoardGame implements Sta³eConst, Cloneable {
     final static int ROOKSEMIOPENFILE10 = 10;
     final static int ROOKOPENFILE15 = 15;
     final static int ROOKONSEVENTH20 = 20;
+    
+    final private static char znakPionka[] = { 'P', 'N', 'B', 'R', 'Q', 'K' };
+    final private static boolean przesun[] = { false, false, true, true, true, false };
+    final private static int przesuniecie[] = { 0, 8, 4, 4, 8, 8 };
+    final private static int wartosci[] = {100, 300, 300, 500, 900, 0};
+    
 
 
     int fifty = 0;
     int history[][] = new int[64][64];
 
     public int MiejscePionka[][] = new int [2][10];
-       
-public int color[] =  {
+    
+    long bitPionka[] = { 0x00ff000000000000L, 0xff00L };
+    long bitulozeniePionkow[] = { 0xffff000000000000L, 0xffffL };
+    long oldPawnBits = 0;
+    long oldPieceBits = 0;
+    int polozenieKrola[] = { 60, 4 };
+    public int color[] =  {
         1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
         1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
         6, 6, 6, 6, 6, 6, 6, 6,
@@ -58,18 +70,7 @@ public int ulozeniePionkow[] =  {
     3, 1, 2, 4, 5, 2, 1, 3
 };
        
-	long bitPionka[] = { 0x00ff000000000000L, 0xff00L };
-    long bitulozeniePionkow[] = { 0xffff000000000000L, 0xffffL };
-    
-    long oldPawnBits = 0;
-    long oldPieceBits = 0;
-    int polozenieKrola[] = { 60, 4 };
-
-    final private static char znakPionka[] = { 'P', 'N', 'B', 'R', 'Q', 'K' };
-
-    final private static boolean przesun[] = { false, false, true, true, true, false };
-
-    final private static int przesuniecie[] = { 0, 8, 4, 4, 8, 8 };
+	
        
     final private static int przesuniecieTab[][] = {
             { 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -117,9 +118,7 @@ public int ulozeniePionkow[] =  {
             13, 15, 15, 15, 12, 15, 15, 14
     };
 
-    private final static int wartosci[] = {
-            100, 300, 300, 500, 900, 0
-    };    
+        
 
 /* po³ozeniw pionka*/
 
@@ -210,7 +209,7 @@ public int getPionek(int i) {
 }
 /*
 public boolean WhiteToMove() {
-    return (side == LIGHT);
+    return (bialy == BIALE);
 }*/
 
 /* 
@@ -228,18 +227,18 @@ s i false w przeciwnym wypadku. */
 
 public boolean attack(int sq, int s) {
      long attackSq = (1L << sq);
-     	if (s == LIGHT) {
-     		long moves = ((bitPionka[LIGHT] & 0x00fefefefefefefeL) >> 9) & attackSq;
+     	if (s == BIALE) {
+     		long moves = ((bitPionka[BIALE] & 0x00fefefefefefefeL) >> 9) & attackSq;
 	        if (moves != 0)
 	            return true;
-	        moves = ((bitPionka[LIGHT] & 0x007f7f7f7f7f7f7fL) >> 7) & attackSq;
+	        moves = ((bitPionka[BIALE] & 0x007f7f7f7f7f7f7fL) >> 7) & attackSq;
 	        if (moves != 0)
 	             return true;
         } else {
-             long moves = ((bitPionka[DARK] & 0x00fefefefefefefeL) << 7)& attackSq;
+             long moves = ((bitPionka[CZARNE] & 0x00fefefefefefefeL) << 7)& attackSq;
                     if (moves != 0)
                             return true;
-                    moves = ((bitPionka[DARK] & 0x007f7f7f7f7f7f7fL) << 9) & attackSq;
+                    moves = ((bitPionka[CZARNE] & 0x007f7f7f7f7f7f7fL) << 9) & attackSq;
                     if (moves != 0)
                             return true;
             }
@@ -254,7 +253,7 @@ public boolean attack(int sq, int s) {
                                             break;
                                     if (n == sq)
                                             return true;
-                                    if (color[n] != EMPTY)
+                                    if (color[n] != PUSTE)
                                             break;
                                     if (!przesun[p])
                                             break;
@@ -275,9 +274,9 @@ public boolean attack(int sq, int s) {
 public List generujRuch() {
             List ret = new ArrayList();    
    
-            long emptySlots = ~(bitulozeniePionkow[LIGHT] | bitulozeniePionkow[DARK]);
-            if (side == LIGHT) {
-                    long moves = (bitPionka[LIGHT] >> 8) & emptySlots;
+            long emptySlots = ~(bitulozeniePionkow[BIALE] | bitulozeniePionkow[CZARNE]);
+            if (bialy == BIALE) {
+                    long moves = (bitPionka[BIALE] >> 8) & emptySlots;
                     long keep = moves;
                     while (moves != 0) {
                             int theMove = getLBit(moves);                          
@@ -290,22 +289,22 @@ public List generujRuch() {
                             dodajNaStos(ret, theMove + 16, theMove, 24);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[LIGHT] & 0x00fefefefefefefeL) >> 9)
-                                    & bitulozeniePionkow[DARK];
+                    moves = ((bitPionka[BIALE] & 0x00fefefefefefefeL) >> 9)
+                                    & bitulozeniePionkow[CZARNE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove + 9, theMove, 17);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[LIGHT] & 0x007f7f7f7f7f7f7fL) >> 7)
-                                    & bitulozeniePionkow[DARK];
+                    moves = ((bitPionka[BIALE] & 0x007f7f7f7f7f7f7fL) >> 7)
+                                    & bitulozeniePionkow[CZARNE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove + 7, theMove, 17);
                             moves &= (moves - 1);
                     }
             } else {
-                    long moves = (bitPionka[DARK] << 8) & emptySlots;
+                    long moves = (bitPionka[CZARNE] << 8) & emptySlots;
                     long keep = moves;
                     while (moves != 0) {
                             int theMove = getLBit(moves);                          
@@ -318,22 +317,22 @@ public List generujRuch() {
                             dodajNaStos(ret, theMove - 16, theMove, 24);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[DARK] & 0x00fefefefefefefeL) << 7)
-                                    & bitulozeniePionkow[LIGHT];
+                    moves = ((bitPionka[CZARNE] & 0x00fefefefefefefeL) << 7)
+                                    & bitulozeniePionkow[BIALE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove - 7, theMove, 17);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[DARK] & 0x007f7f7f7f7f7f7fL) << 9)
-                                    & bitulozeniePionkow[LIGHT];
+                    moves = ((bitPionka[CZARNE] & 0x007f7f7f7f7f7f7fL) << 9)
+                                    & bitulozeniePionkow[BIALE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove - 9, theMove, 17);
                             moves &= (moves - 1);
                     }
             }
-            long pieces = bitulozeniePionkow[side] ^ bitPionka[side];
+            long pieces = bitulozeniePionkow[bialy] ^ bitPionka[bialy];
             while (pieces != 0) {
                     int i = getLBit(pieces);
                     int p = ulozeniePionkow[i];
@@ -342,8 +341,8 @@ public List generujRuch() {
                                     n = pudelko[pudelko64[n] + przesuniecieTab[p][j]];
                                     if (n == -1)
                                             break;
-                                    if (color[n] != EMPTY) {
-                                            if (color[n] == xside)
+                                    if (color[n] != PUSTE) {
+                                            if (color[n] == czarny)
                                             	dodajNaStos(ret, i, n, 1);
                                             break;
                                     }
@@ -355,37 +354,37 @@ public List generujRuch() {
             }
 
             /* generuje ruch wie¿y */
-            if (side == LIGHT) {
-                    if (((wieza & 1) != 0) && (ulozeniePionkow[F1] == EMPTY)
-                                    && (ulozeniePionkow[G1] == EMPTY))
+            if (bialy == BIALE) {
+                    if (((wieza & 1) != 0) && (ulozeniePionkow[F1] == PUSTE)
+                                    && (ulozeniePionkow[G1] == PUSTE))
                     	dodajNaStos(ret, E1, G1, 2);
-                    if (((wieza & 2) != 0) && (ulozeniePionkow[D1] == EMPTY)
-                                    && (ulozeniePionkow[C1] == EMPTY) && (ulozeniePionkow[B1] == EMPTY))
+                    if (((wieza & 2) != 0) && (ulozeniePionkow[D1] == PUSTE)
+                                    && (ulozeniePionkow[C1] == PUSTE) && (ulozeniePionkow[B1] == PUSTE))
                     	dodajNaStos(ret, E1, C1, 2);
             } else {
-                    if (((wieza & 4) != 0) && (ulozeniePionkow[F8] == EMPTY)
-                                    && (ulozeniePionkow[G8] == EMPTY))
+                    if (((wieza & 4) != 0) && (ulozeniePionkow[F8] == PUSTE)
+                                    && (ulozeniePionkow[G8] == PUSTE))
                     	dodajNaStos(ret, E8, G8, 2);
-                    if (((wieza & 8) != 0) && (ulozeniePionkow[D8] == EMPTY)
-                                    && (ulozeniePionkow[C8] == EMPTY) && (ulozeniePionkow[B8] == EMPTY))
+                    if (((wieza & 8) != 0) && (ulozeniePionkow[D8] == PUSTE)
+                                    && (ulozeniePionkow[C8] == PUSTE) && (ulozeniePionkow[B8] == PUSTE))
                     	dodajNaStos(ret, E8, C8, 2);
             }
 
             /* generujemy en ruchów*/
             if (ep != -1) {
-                    if (side == LIGHT) {
-                            if (COL(ep) != 0 && color[ep + 7] == LIGHT
-                                            && ulozeniePionkow[ep + 7] == PAWN)
+                    if (bialy == BIALE) {
+                            if (COL(ep) != 0 && color[ep + 7] == BIALE
+                                            && ulozeniePionkow[ep + 7] == PIONEK)
                             	dodajNaStos(ret, ep + 7, ep, 21);
-                            if (COL(ep) != 7 && color[ep + 9] == LIGHT
-                                            && ulozeniePionkow[ep + 9] == PAWN)
+                            if (COL(ep) != 7 && color[ep + 9] == BIALE
+                                            && ulozeniePionkow[ep + 9] == PIONEK)
                             	dodajNaStos(ret, ep + 9, ep, 21);
                     } else {
-                            if (COL(ep) != 0 && color[ep - 9] == DARK
-                                            && ulozeniePionkow[ep - 9] == PAWN)
+                            if (COL(ep) != 0 && color[ep - 9] == CZARNE
+                                            && ulozeniePionkow[ep - 9] == PIONEK)
                             	dodajNaStos(ret, ep - 9, ep, 21);
-                            if (COL(ep) != 7 && color[ep - 7] == DARK
-                                            && ulozeniePionkow[ep - 7] == PAWN)
+                            if (COL(ep) != 7 && color[ep - 7] == CZARNE
+                                            && ulozeniePionkow[ep - 7] == PIONEK)
                             	dodajNaStos(ret, ep - 7, ep, 21);
                     }
             }
@@ -400,38 +399,38 @@ public List generujRuch() {
 public List RejestrGenRuchu() {
             List ret = new ArrayList();
 
-            if (side == LIGHT) {
-                    long moves = ((bitPionka[LIGHT] & 0x00fefefefefefefeL) >> 9)
-                                    & bitulozeniePionkow[DARK];
+            if (bialy == BIALE) {
+                    long moves = ((bitPionka[BIALE] & 0x00fefefefefefefeL) >> 9)
+                                    & bitulozeniePionkow[CZARNE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove + 9, theMove, 17);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[LIGHT] & 0x007f7f7f7f7f7f7fL) >> 7)
-                                    & bitulozeniePionkow[DARK];
+                    moves = ((bitPionka[BIALE] & 0x007f7f7f7f7f7f7fL) >> 7)
+                                    & bitulozeniePionkow[CZARNE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove + 7, theMove, 17);
                             moves &= (moves - 1);
                     }
             } else {
-                    long moves = ((bitPionka[DARK] & 0x00fefefefefefefeL) << 7)
-                                    & bitulozeniePionkow[LIGHT];
+                    long moves = ((bitPionka[CZARNE] & 0x00fefefefefefefeL) << 7)
+                                    & bitulozeniePionkow[BIALE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove - 7, theMove, 17);
                             moves &= (moves - 1);
                     }
-                    moves = ((bitPionka[DARK] & 0x007f7f7f7f7f7f7fL) << 9)
-                                    & bitulozeniePionkow[LIGHT];
+                    moves = ((bitPionka[CZARNE] & 0x007f7f7f7f7f7f7fL) << 9)
+                                    & bitulozeniePionkow[BIALE];
                     while (moves != 0) {
                             int theMove = getLBit(moves);
                             dodajNaStos(ret, theMove - 9, theMove, 17);
                             moves &= (moves - 1);
                     }
             }
-            long pieces = bitulozeniePionkow[side] ^ bitPionka[side];
+            long pieces = bitulozeniePionkow[bialy] ^ bitPionka[bialy];
             while (pieces != 0) {
                     int p = getLBit(pieces);
                     for (int j = 0; j < przesuniecie[ulozeniePionkow[p]]; ++j)
@@ -439,8 +438,8 @@ public List RejestrGenRuchu() {
                                     n = pudelko[pudelko64[n] + przesuniecieTab[ulozeniePionkow[p]][j]];
                                     if (n == -1)
                                             break;
-                                    if (color[n] != EMPTY) {
-                                            if (color[n] == xside)
+                                    if (color[n] != PUSTE) {
+                                            if (color[n] == czarny)
                                             	dodajNaStos(ret, p, n, 1);
                                             break;
                                     }
@@ -450,19 +449,19 @@ public List RejestrGenRuchu() {
                     pieces &= (pieces - 1);
             }
             if (ep != -1) {
-                    if (side == LIGHT) {
-                            if (COL(ep) != 0 && color[ep + 7] == LIGHT
-                                            && ulozeniePionkow[ep + 7] == PAWN)
+                    if (bialy == BIALE) {
+                            if (COL(ep) != 0 && color[ep + 7] == BIALE
+                                            && ulozeniePionkow[ep + 7] == PIONEK)
                             	dodajNaStos(ret, ep + 7, ep, 21);
-                            if (COL(ep) != 7 && color[ep + 9] == LIGHT
-                                            && ulozeniePionkow[ep + 9] == PAWN)
+                            if (COL(ep) != 7 && color[ep + 9] == BIALE
+                                            && ulozeniePionkow[ep + 9] == PIONEK)
                             	dodajNaStos(ret, ep + 9, ep, 21);
                     } else {
-                            if (COL(ep) != 0 && color[ep - 9] == DARK
-                                            && ulozeniePionkow[ep - 9] == PAWN)
+                            if (COL(ep) != 0 && color[ep - 9] == CZARNE
+                                            && ulozeniePionkow[ep - 9] == PIONEK)
                             	dodajNaStos(ret, ep - 9, ep, 21);
-                            if (COL(ep) != 7 && color[ep - 7] == DARK
-                                            && ulozeniePionkow[ep - 7] == PAWN)
+                            if (COL(ep) != 7 && color[ep - 7] == CZARNE
+                                            && ulozeniePionkow[ep - 7] == PIONEK)
                             	dodajNaStos(ret, ep - 7, ep, 21);
                     }
             }
@@ -473,9 +472,6 @@ public List RejestrGenRuchu() {
   * stosie jest pionek promowany u¿ywamy wtedy funkcji 
   * dodaj4Ruchy().
   * Przypisanie ruchów alfanumeryczni  
-  * Jeœli ruch jest przechwytywanie, u¿ywa MVV / Lot
-  * (Most Valuable Victim / najmniej cenne Atakuj¹cy). 
-  * W przeciwnym razie, u¿ywa on the Move to wartoœæ heurystyczn¹ historii.
   * Nale¿y pamiêtaæ, ¿e 1000000 wprowadza siê do przechwytywania 
   * w wyniku przemieszczania siê, a wiêc zawsze pobiera uporz¹dkowane 
   * powy¿ej "normalnego" ruchu. */
@@ -483,7 +479,7 @@ public List RejestrGenRuchu() {
  @SuppressWarnings({ "unchecked", "rawtypes" })
 void dodajNaStos(Collection ret, int from, int to, int bits) {
             if ((bits & 16) != 0) {
-                    if (side == LIGHT) {
+                    if (bialy == BIALE) {
                             if (to <= H8) {
                             	dodaj4Ruchy(ret, from, to, bits);
                                     return;
@@ -498,10 +494,10 @@ void dodajNaStos(Collection ret, int from, int to, int bits) {
 
             Ruchy g = new Ruchy(from, to, 0, bits, znakPionka[ulozeniePionkow[from]]);          
            
-            if (color[to] != EMPTY)
-                    g.setScore(1000000 + (ulozeniePionkow[to] * 10) - ulozeniePionkow[from]);
+            if (color[to] != PUSTE)
+                    g.setWynik(1000000 + (ulozeniePionkow[to] * 10) - ulozeniePionkow[from]);
             else
-                    g.setScore(history[from][to]);
+                    g.setWynik(history[from][to]);
             ret.add(g);
     }    
  
@@ -510,9 +506,9 @@ void dodajNaStos(Collection ret, int from, int to, int bits) {
  
  @SuppressWarnings({ "rawtypes", "unchecked" })
 void dodaj4Ruchy(Collection ret, int from, int to, int bits) {
-            for (char i = KNIGHT; i <= QUEEN; ++i) {
+            for (char i = GONIEC; i <= KROLOWA; ++i) {
                     Ruchy g = new Ruchy(from, to, i, (bits | 32), 'P');
-                    g.setScore(1000000 + (i * 10));
+                    g.setWynik(1000000 + (i * 10));
                     ret.add(g);
             }
  }
@@ -521,66 +517,66 @@ void dodaj4Ruchy(Collection ret, int from, int to, int bits) {
   * zwraca false i cofa ruch w przeciwnym racie true*/      
  @SuppressWarnings("rawtypes")
 public boolean wykonajRuch(Ruchy m) {
-            long oldBits[] = { bitulozeniePionkow[LIGHT], bitulozeniePionkow[DARK] };
+            long oldBits[] = { bitulozeniePionkow[BIALE], bitulozeniePionkow[CZARNE] };
 
             int from, to;
             if ((m.bits & 2) != 0) {
 
-                    if (sprawdzAtak(side))
+                    if (sprawdzAtak(bialy))
                             return false;
-                    switch (m.getTo()) {
+                    switch (m.getDo()) {
                     case 62:
-                            if (color[F1] != EMPTY || color[G1] != EMPTY
-                                            || attack(F1, xside) || attack(G1, xside))
+                            if (color[F1] != PUSTE || color[G1] != PUSTE
+                                            || attack(F1, czarny) || attack(G1, czarny))
                                     return false;
                             from = H1;
                             to = F1;
                             break;
                     case 58:
-                            if (color[B1] != EMPTY || color[C1] != EMPTY
-                                            || color[D1] != EMPTY || attack(C1, xside)
-                                            || attack(D1, xside))
+                            if (color[B1] != PUSTE || color[C1] != PUSTE
+                                            || color[D1] != PUSTE || attack(C1, czarny)
+                                            || attack(D1, czarny))
                                     return false;
                             from = A1;
                             to = D1;
                             break;
                     case 6:
-                            if (color[F8] != EMPTY || color[G8] != EMPTY
-                                            || attack(F8, xside) || attack(G8, xside))
+                            if (color[F8] != PUSTE || color[G8] != PUSTE
+                                            || attack(F8, czarny) || attack(G8, czarny))
                                     return false;
                             from = H8;
                             to = F8;
                             break;
                     case 2:
-                            if (color[B8] != EMPTY || color[C8] != EMPTY
-                                            || color[D8] != EMPTY || attack(C8, xside)
-                                            || attack(D8, xside))
+                            if (color[B8] != PUSTE || color[C8] != PUSTE
+                                            || color[D8] != PUSTE || attack(C8, czarny)
+                                            || attack(D8, czarny))
                                     return false;
                             from = A8;
                             to = D8;
                             break;
-                    default: /* shouldn't get here */
+                    default: 
                             from = -1;
                             to = -1;
                             break;
                     }
                     color[to] = color[from];
                     ulozeniePionkow[to] = ulozeniePionkow[from];
-                    color[from] = EMPTY;
-                    ulozeniePionkow[from] = EMPTY;
-                    bitulozeniePionkow[side] ^= (1L << from) | (1L << to);
+                    color[from] = PUSTE;
+                    ulozeniePionkow[from] = PUSTE;
+                    bitulozeniePionkow[bialy] ^= (1L << from) | (1L << to);
             }
             /* kopii zapasowych informacji, abyœmy mogli cofn¹æ ruch. */
            
             HistoriaRuchow h = new HistoriaRuchow();              
             h.m = m;
-            to = m.getTo();
-            from = m.getFrom();
-            h.capture = ulozeniePionkow[to];
+            to = m.getDo();
+            from = m.getOd();
+            h.zwyciestwo = ulozeniePionkow[to];
             h.wieza = wieza;
             h.ep = ep;
             h.fifty = fifty;
-            h.bitPionka = new long[] { bitPionka[LIGHT], bitPionka[DARK] };
+            h.bitPionka = new long[] { bitPionka[BIALE], bitPionka[CZARNE] };
             h.bitulozeniePionkow = oldBits;
             histDat[hply++] = h;
                                                        
@@ -588,7 +584,7 @@ public boolean wykonajRuch(Ruchy m) {
              * zaktualizowaæ pozycji wiezy             */
             wieza &= ruchywiezy[from] & ruchywiezy[to];
             if ((m.bits & 8) != 0) {
-                    if (side == LIGHT)
+                    if (bialy == BIALE)
                             ep = to + 8;
                     else
                             ep = to - 8;
@@ -601,45 +597,45 @@ public boolean wykonajRuch(Ruchy m) {
 
             /* ruch pionka */
             int thePiece = ulozeniePionkow[from];
-            if (thePiece == KING)
-            	polozenieKrola[side] = to;
-            color[to] = side;
+            if (thePiece == KROL)
+            	polozenieKrola[bialy] = to;
+            color[to] = bialy;
             if ((m.bits & 32) != 0) {
-            	ulozeniePionkow[to] = m.promote;
-            	matP[side] += wartosci[m.promote];
+            	ulozeniePionkow[to] = m.wyroznij;
+            	matP[bialy] += wartosci[m.wyroznij];
             } else
             	ulozeniePionkow[to] = thePiece;
-            color[from] = EMPTY;
-            ulozeniePionkow[from] = EMPTY;
+            color[from] = PUSTE;
+            ulozeniePionkow[from] = PUSTE;
             long fromBits = 1L << from;
             long toBits = 1L << to;
-            bitulozeniePionkow[side] ^= fromBits | toBits;
+            bitulozeniePionkow[bialy] ^= fromBits | toBits;
             if ((m.bits & 16) != 0) {
-            	bitPionka[side] ^= fromBits;
+            	bitPionka[bialy] ^= fromBits;
                     if ((m.bits & 32) == 0)
-                    	bitPionka[side] |= toBits;
+                    	bitPionka[bialy] |= toBits;
             }
-            int capture = h.capture;                
-            if (capture != EMPTY) {
-            	bitulozeniePionkow[xside] ^= toBits;
-                    if (capture == PAWN)
-                    	bitPionka[xside] ^= toBits;
+            int zwyciestwo = h.zwyciestwo;                
+            if (zwyciestwo != PUSTE) {
+            	bitulozeniePionkow[czarny] ^= toBits;
+                    if (zwyciestwo == PIONEK)
+                    	bitPionka[czarny] ^= toBits;
                     else
-                    	matP[xside] -= wartosci[capture];
+                    	matP[czarny] -= wartosci[zwyciestwo];
             }
 
             /* usun¹æ pionka czy to ruch pionka  */
             if ((m.bits & 4) != 0) {
-                    if (side == LIGHT) {
-                            color[to + 8] = EMPTY;
-                            ulozeniePionkow[to + 8] = EMPTY;
-                            bitulozeniePionkow[DARK] ^= (1L << (to + 8));
-                            bitPionka[DARK] ^= (1L << (to + 8));
+                    if (bialy == BIALE) {
+                            color[to + 8] = PUSTE;
+                            ulozeniePionkow[to + 8] = PUSTE;
+                            bitulozeniePionkow[CZARNE] ^= (1L << (to + 8));
+                            bitPionka[CZARNE] ^= (1L << (to + 8));
                     } else {
-                            color[to - 8] = EMPTY;
-                            ulozeniePionkow[to - 8] = EMPTY;
-                            bitulozeniePionkow[LIGHT] ^= (1L << (to - 8));
-                            bitPionka[LIGHT] ^= (1L << (to - 8));
+                            color[to - 8] = PUSTE;
+                            ulozeniePionkow[to - 8] = PUSTE;
+                            bitulozeniePionkow[BIALE] ^= (1L << (to - 8));
+                            bitPionka[BIALE] ^= (1L << (to - 8));
                     }
             }
 
@@ -647,20 +643,20 @@ public boolean wykonajRuch(Ruchy m) {
              * zmieniæ strony i sprawdzania poprawnoœæ ruchów (jeœli mo¿emy uchwyciæ inna pozycje
               * Król, to z³a pozycja i musimy podj¹æ ruch do ty³u
              */
-            side ^= 1;
-            xside ^= 1;
-            if (sprawdzAtak(xside)) {
+            bialy ^= 1;
+            czarny ^= 1;
+            if (sprawdzAtak(czarny)) {
             	cofnijRuch();
                     return false;
             }
             return true;
     }
  
- /* cofnijRuch() to samo co Makemowe tylko cofie do ty³u ruch:)  */
+ /* cofnijRuch() to samo co wykonajRuch tylko cofie do ty³u ruch:)  */
  @SuppressWarnings("rawtypes")
 void cofnijRuch() {
-            side ^= 1;
-            xside ^= 1;
+	 bialy ^= 1;
+	 czarny ^= 1;
             HistoriaRuchow h = histDat[--hply];
             bitPionka = h.bitPionka;
             bitulozeniePionkow = h.bitulozeniePionkow;
@@ -668,26 +664,26 @@ void cofnijRuch() {
             wieza = h.wieza;
             ep = h.ep;
             fifty = h.fifty;
-            int from = m.getFrom();
-            int to = m.getTo();
-            color[from] = side;
+            int from = m.getOd();
+            int to = m.getDo();
+            color[from] = bialy;
             if ((m.bits & 32) != 0) {
-            	ulozeniePionkow[from] = PAWN;
-            	matP[side] -= wartosci[h.m.promote];
+            	ulozeniePionkow[from] = PIONEK;
+            	matP[bialy] -= wartosci[h.m.wyroznij];
             } else {
                     int thePiece = ulozeniePionkow[to];
-                    if (thePiece == KING)
-                    	polozenieKrola[side] = from;
+                    if (thePiece == KROL)
+                    	polozenieKrola[bialy] = from;
                     ulozeniePionkow[from] = thePiece;
             }
-            if (h.capture == EMPTY) {
-                    color[to] = EMPTY;
-                    ulozeniePionkow[to] = EMPTY;
+            if (h.zwyciestwo == PUSTE) {
+                    color[to] = PUSTE;
+                    ulozeniePionkow[to] = PUSTE;
             } else {
-                    color[to] = xside;
-                    ulozeniePionkow[to] = h.capture;
-                    if (h.capture != PAWN)
-                    	matP[xside] += wartosci[h.capture];
+                    color[to] = czarny;
+                    ulozeniePionkow[to] = h.zwyciestwo;
+                    if (h.zwyciestwo != PIONEK)
+                    	matP[czarny] += wartosci[h.zwyciestwo];
             }
             if ((m.bits & 2) != 0) {
                     int cfrom, cto;
@@ -714,18 +710,18 @@ void cofnijRuch() {
                             cto = -1;
                             break;
                     }
-                    color[cto] = side;
-                    ulozeniePionkow[cto] = ROOK;
-                    color[cfrom] = EMPTY;
-                    ulozeniePionkow[cfrom] = EMPTY;
+                    color[cto] = bialy;
+                    ulozeniePionkow[cto] = WIEZA;
+                    color[cfrom] = PUSTE;
+                    ulozeniePionkow[cfrom] = PUSTE;
             }
             if ((m.bits & 4) != 0) {
-                    if (side == LIGHT) {
-                            color[to + 8] = xside;
-                            ulozeniePionkow[to + 8] = PAWN;
+                    if (bialy == BIALE) {
+                            color[to + 8] = czarny;
+                            ulozeniePionkow[to + 8] = PIONEK;
                     } else {
-                            color[to - 8] = xside;
-                            ulozeniePionkow[to - 8] = PAWN;
+                            color[to - 8] = czarny;
+                            ulozeniePionkow[to - 8] = PIONEK;
                     }
             }
     }
@@ -736,14 +732,14 @@ void cofnijRuch() {
             StringBuffer sb = new StringBuffer("\n8 ");
             for (i = 0; i < 64; ++i) {
                     switch (color[i]) {
-                    case EMPTY:
+                    case PUSTE:
                             sb.append(" .");
                             break;
-                    case LIGHT:
+                    case BIALE:
                             sb.append(" ");
                             sb.append(znakPionka[ulozeniePionkow[i]]);
                             break;
-                    case DARK:
+                    case CZARNE:
                             sb.append(" ");
                             sb.append((char) (znakPionka[ulozeniePionkow[i]] + ('a' - 'A')));
                             break;
@@ -778,11 +774,11 @@ do tego sprytnego algorytmu. */
 
             /* odwracanie ruchów */
             for (int i = hply - 1; i >= hply - fifty - 1; --i) {
-                    if (++b[histDat[i].m.getFrom()] == 0)
+                    if (++b[histDat[i].m.getOd()] == 0)
                             --c;
                     else
                             ++c;
-                    if (--b[histDat[i].m.getTo()] == 0)
+                    if (--b[histDat[i].m.getDo()] == 0)
                             --c;
                     else
                             ++c;
@@ -796,96 +792,96 @@ do tego sprytnego algorytmu. */
  int pozyPionka() {
             int score[] = new int[2];
 
-            if (oldPawnBits != (bitPionka[LIGHT] | bitPionka[DARK])) {
+            if (oldPawnBits != (bitPionka[BIALE] | bitPionka[CZARNE])) {
                     for (int i = 0; i < 10; ++i) {
-                    	MiejscePionka[LIGHT][i] = 0;
-                    	MiejscePionka[DARK][i] = 7;
+                    	MiejscePionka[BIALE][i] = 0;
+                    	MiejscePionka[CZARNE][i] = 7;
                     }
-                    pawnMat[LIGHT] = 0;
-                    pawnMat[DARK] = 0;
-                    long pieces = bitPionka[LIGHT];
+                    matPionek[BIALE] = 0;
+                    matPionek[CZARNE] = 0;
+                    long pieces = bitPionka[BIALE];
                     while (pieces != 0) {
                             int i = getLBit(pieces);
-                            pawnMat[LIGHT] += wartosci[PAWN];
+                            matPionek[BIALE] += wartosci[PIONEK];
                             int f = COL(i) + 1; /*
                                                                      * dodaæ 1 ze wzglêdu na dodatkowe pliku w
                                                                       * tablica
                                                                      */
-                            if (MiejscePionka[LIGHT][f] < ROW(i))
-                            	MiejscePionka[LIGHT][f] = ROW(i);
+                            if (MiejscePionka[BIALE][f] < ROW(i))
+                            	MiejscePionka[BIALE][f] = ROW(i);
                             pieces &= (pieces - 1);
                     }
-                    pieces = bitPionka[DARK];
+                    pieces = bitPionka[CZARNE];
                     while (pieces != 0) {
                             int i = getLBit(pieces);
-                            pawnMat[DARK] += wartosci[PAWN];
+                            matPionek[CZARNE] += wartosci[PIONEK];
                             int f = COL(i) + 1; /*
                                                                                                                                         */
-                            if (MiejscePionka[DARK][f] > ROW(i))
-                            	MiejscePionka[DARK][f] = ROW(i);
+                            if (MiejscePionka[CZARNE][f] > ROW(i))
+                            	MiejscePionka[CZARNE][f] = ROW(i);
                             pieces &= (pieces - 1);
                     }
-                    oldPawnBits = bitPionka[LIGHT] | bitPionka[DARK];
+                    oldPawnBits = bitPionka[BIALE] | bitPionka[CZARNE];
             }
-            score[LIGHT] = matP[LIGHT] + pawnMat[LIGHT];
-            score[DARK] = matP[DARK] + pawnMat[DARK];
+            score[BIALE] = matP[BIALE] + matPionek[BIALE];
+            score[CZARNE] = matP[CZARNE] + matPionek[CZARNE];
             for (int i = 0; i < 64; ++i) {
-                    if (color[i] == EMPTY)
+                    if (color[i] == PUSTE)
                             continue;
-                    if (color[i] == LIGHT) {
+                    if (color[i] == BIALE) {
                             switch (ulozeniePionkow[i]) {
-                            case PAWN:
-                                    score[LIGHT] += pozPionkaBialego(i);
+                            case PIONEK:
+                                    score[BIALE] += pozPionkaBialego(i);
                                     break;
-                            case KNIGHT:
-                                    score[LIGHT] += krolowaPC[i];
+                            case GONIEC:
+                                    score[BIALE] += krolowaPC[i];
                                     break;
-                            case BISHOP:
-                                    score[LIGHT] += skoczekPC[i];
+                            case SKOCZEK:
+                                    score[BIALE] += skoczekPC[i];
                                     break;
-                            case ROOK:
-                                    if (MiejscePionka[LIGHT][COL(i) + 1] == 0) {
-                                            if (MiejscePionka[DARK][COL(i) + 1] == 7)
-                                                    score[LIGHT] += ROOKOPENFILE15;
+                            case WIEZA:
+                                    if (MiejscePionka[BIALE][COL(i) + 1] == 0) {
+                                            if (MiejscePionka[CZARNE][COL(i) + 1] == 7)
+                                                    score[BIALE] += ROOKOPENFILE15;
                                             else
-                                                    score[LIGHT] += ROOKSEMIOPENFILE10;
+                                                    score[BIALE] += ROOKSEMIOPENFILE10;
                                     }
                                     if (ROW(i) == 1)
-                                            score[LIGHT] += ROOKONSEVENTH20;
+                                            score[BIALE] += ROOKONSEVENTH20;
                                     break;
-                            case KING:
-                                    if (matP[DARK] <= 1200)
-                                            score[LIGHT] += koncoweRuchyKrolaPC[i];
+                            case KROL:
+                                    if (matP[CZARNE] <= 1200)
+                                            score[BIALE] += koncoweRuchyKrolaPC[i];
                                     else
-                                            score[LIGHT] += pozBialegoKrola(i);
+                                            score[BIALE] += pozBialegoKrola(i);
                                     break;
                             }
                     } else {
                             switch (ulozeniePionkow[i]) {
-                            case PAWN:
-                                    score[DARK] += pozPionkaCzarnego(i);
+                            case PIONEK:
+                                    score[CZARNE] += pozPionkaCzarnego(i);
                                     break;
-                            case KNIGHT:
-                                    score[DARK] += krolowaPC[nrSzachownicy[i]];
+                            case GONIEC:
+                                    score[CZARNE] += krolowaPC[nrSzachownicy[i]];
                                     break;
-                            case BISHOP:
-                                    score[DARK] += skoczekPC[nrSzachownicy[i]];
+                            case SKOCZEK:
+                                    score[CZARNE] += skoczekPC[nrSzachownicy[i]];
                                     break;
-                            case ROOK:
-                                    if (MiejscePionka[DARK][COL(i) + 1] == 7) {
-                                            if (MiejscePionka[LIGHT][COL(i) + 1] == 0)
-                                                    score[DARK] += ROOKOPENFILE15;
+                            case WIEZA:
+                                    if (MiejscePionka[CZARNE][COL(i) + 1] == 7) {
+                                            if (MiejscePionka[BIALE][COL(i) + 1] == 0)
+                                                    score[CZARNE] += ROOKOPENFILE15;
                                             else
-                                                    score[DARK] += ROOKSEMIOPENFILE10;
+                                                    score[CZARNE] += ROOKSEMIOPENFILE10;
                                     }
                                     if (ROW(i) == 6)
-                                            score[DARK] += ROOKONSEVENTH20;
+                                            score[CZARNE] += ROOKONSEVENTH20;
                                     break;
-                            case KING:
-                                    if (matP[LIGHT] <= 1200)
-                                            score[DARK] += koncoweRuchyKrolaPC[nrSzachownicy[i]];
+                            case KROL:
+                                    if (matP[BIALE] <= 1200)
+                                            score[CZARNE] += koncoweRuchyKrolaPC[nrSzachownicy[i]];
                                     else
-                                            score[DARK] += pozCzarnegoKrola(i);
+                                            score[CZARNE] += pozCzarnegoKrola(i);
                                     break;
                             }
                     }
@@ -895,9 +891,9 @@ do tego sprytnego algorytmu. */
              * the score[] jest ustawiona pozycje pionka
               * 
              */
-            if (side == LIGHT)
-                    return score[LIGHT] - score[DARK];
-            return score[DARK] - score[LIGHT];
+            if (bialy == BIALE)
+                    return score[BIALE] - score[CZARNE];
+            return score[CZARNE] - score[BIALE];
     }  
  
  public int pozPionkaBialego(int sq) {
@@ -907,23 +903,23 @@ do tego sprytnego algorytmu. */
             r += pionkiPC[sq];
 
             /* jeœli jest pionkiem */
-            if (MiejscePionka[LIGHT][f] > ROW(sq))
+            if (MiejscePionka[BIALE][f] > ROW(sq))
                     r -= PAWNPENALTY10;
 
             /*
              * jeœli nie ma ¿adnych przyjazne pionki po obu stronach tego jednego
               * 
              */
-            if ((MiejscePionka[LIGHT][f - 1] == 0) && (MiejscePionka[LIGHT][f + 1] == 0))
+            if ((MiejscePionka[BIALE][f - 1] == 0) && (MiejscePionka[BIALE][f + 1] == 0))
                     r -= PAWNPENALTY20;
 
-            else if ((MiejscePionka[LIGHT][f - 1] < ROW(sq))
-                            && (MiejscePionka[LIGHT][f + 1] < ROW(sq)))
+            else if ((MiejscePionka[BIALE][f - 1] < ROW(sq))
+                            && (MiejscePionka[BIALE][f + 1] < ROW(sq)))
                     r -= PAWNPENALTY8;
 
-             if ((MiejscePionka[DARK][f - 1] >= ROW(sq))
-                            && (MiejscePionka[DARK][f] >= ROW(sq))
-                            && (MiejscePionka[DARK][f + 1] >= ROW(sq)))
+             if ((MiejscePionka[CZARNE][f - 1] >= ROW(sq))
+                            && (MiejscePionka[CZARNE][f] >= ROW(sq))
+                            && (MiejscePionka[CZARNE][f + 1] >= ROW(sq)))
                     r += (7 - ROW(sq)) * PAWNBONUS20;
 
             return r;
@@ -935,19 +931,19 @@ do tego sprytnego algorytmu. */
 
             r += pionkiPC[nrSzachownicy[sq]];
 
-            if (MiejscePionka[DARK][f] < ROW(sq))
+            if (MiejscePionka[CZARNE][f] < ROW(sq))
                     r -= PAWNPENALTY10;
 
-             if ((MiejscePionka[DARK][f - 1] == 7) && (MiejscePionka[DARK][f + 1] == 7))
+             if ((MiejscePionka[CZARNE][f - 1] == 7) && (MiejscePionka[CZARNE][f + 1] == 7))
                     r -= PAWNPENALTY20;
 
-            else if ((MiejscePionka[DARK][f - 1] > ROW(sq))
-                            && (MiejscePionka[DARK][f + 1] > ROW(sq)))
+            else if ((MiejscePionka[CZARNE][f - 1] > ROW(sq))
+                            && (MiejscePionka[CZARNE][f + 1] > ROW(sq)))
                     r -= PAWNPENALTY8;
 
-             if ((MiejscePionka[LIGHT][f - 1] <= ROW(sq))
-                            && (MiejscePionka[LIGHT][f] <= ROW(sq))
-                            && (MiejscePionka[LIGHT][f + 1] <= ROW(sq)))
+             if ((MiejscePionka[BIALE][f - 1] <= ROW(sq))
+                            && (MiejscePionka[BIALE][f] <= ROW(sq))
+                            && (MiejscePionka[BIALE][f + 1] <= ROW(sq)))
                     r += ROW(sq) * PAWNBONUS20;
 
             return r;
@@ -975,7 +971,7 @@ do tego sprytnego algorytmu. */
              */
             else {
                     for (int i = COL(sq); i <= COL(sq) + 2; ++i)
-                            if ((MiejscePionka[LIGHT][i] == 0) && (MiejscePionka[DARK][i] == 7))
+                            if ((MiejscePionka[BIALE][i] == 0) && (MiejscePionka[CZARNE][i] == 7))
                                     r -= 10;
             }
 
@@ -984,7 +980,7 @@ do tego sprytnego algorytmu. */
               Za³o¿eniem jest, ¿e * bezpieczeñstwo król mo¿e byæ tylko Ÿle, jeœli przeciwnik ma
               * Ma³o sztuk do ataku
              */
-            r *= matP[DARK];
+            r *= matP[CZARNE];
             r /= 3100;
 
             return r;
@@ -995,20 +991,20 @@ do tego sprytnego algorytmu. */
     int sprawdzPionkaBialego(int f) {
             int r = 0;
 
-            if (MiejscePionka[LIGHT][f] == 6)
+            if (MiejscePionka[BIALE][f] == 6)
                     ; /* pionek nie ruchomy */
-            else if (MiejscePionka[LIGHT][f] == 5)
+            else if (MiejscePionka[BIALE][f] == 5)
                     r -= 10; /* pionek przesuno³ sie o jedno pole */
-            else if (MiejscePionka[LIGHT][f] != 0)
+            else if (MiejscePionka[BIALE][f] != 0)
                     r -= 20; /* pionek przesuno³ sie o wiecej pól */
             else
                     r -= 25; /* to nie pionek */
 
-            if (MiejscePionka[DARK][f] == 7)
+            if (MiejscePionka[CZARNE][f] == 7)
                     r -= 15; /* pionek przeciwnika */
-            else if (MiejscePionka[DARK][f] == 5)
+            else if (MiejscePionka[CZARNE][f] == 5)
                     r -= 10; /* pionek przeciwnika na 3 losowaniu */
-            else if (MiejscePionka[DARK][f] == 4)
+            else if (MiejscePionka[CZARNE][f] == 4)
                     r -= 5; /* pionek przeciwnika na 3 losowaniu */
 
             return r;
@@ -1029,10 +1025,10 @@ do tego sprytnego algorytmu. */
                     r += sprawdzPionkaCzarnego(6) / 2;
             } else {
                     for (i = COL(sq); i <= COL(sq) + 2; ++i)
-                            if ((MiejscePionka[LIGHT][i] == 0) && (MiejscePionka[DARK][i] == 7))
+                            if ((MiejscePionka[BIALE][i] == 0) && (MiejscePionka[CZARNE][i] == 7))
                                     r -= 10;
             }
-            r *= matP[LIGHT];
+            r *= matP[BIALE];
             r /= 3100;
             return r;
     }
@@ -1040,20 +1036,20 @@ do tego sprytnego algorytmu. */
     int sprawdzPionkaCzarnego(int f) {
             int r = 0;
 
-            if (MiejscePionka[DARK][f] == 1)
+            if (MiejscePionka[CZARNE][f] == 1)
                     ;
-            else if (MiejscePionka[DARK][f] == 2)
+            else if (MiejscePionka[CZARNE][f] == 2)
                     r -= 10;
-            else if (MiejscePionka[DARK][f] != 7)
+            else if (MiejscePionka[CZARNE][f] != 7)
                     r -= 20;
             else
                     r -= 25;
 
-            if (MiejscePionka[LIGHT][f] == 0)
+            if (MiejscePionka[BIALE][f] == 0)
                     r -= 15;
-            else if (MiejscePionka[LIGHT][f] == 2)
+            else if (MiejscePionka[BIALE][f] == 2)
                     r -= 10;
-            else if (MiejscePionka[LIGHT][f] == 3)
+            else if (MiejscePionka[BIALE][f] == 3)
                     r -= 5;
 
             return r;

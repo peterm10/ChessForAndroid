@@ -8,28 +8,23 @@ public class RuchyPodstawowe {
             this.from = from;
             this.to = to;
     }
-
-    public final int getFrom() {
-            return from;
-    }
-
-    public final int getTo() {
-            return to;
-    }
-
-    public final int getFromRow() {
+    public final int getOdWier() {
             return from >> 3;
     }
-
-    public final int getFromCol() {
+    public final int getDoWierszy() {
+            return to >> 3;
+    }
+    public final int getDo() {
+            return to;
+    }
+    public final int getOd() {
+            return from;
+    }
+    public final int getOdKolumn() {
             return from % 8;
     }
 
-    public final int getToRow() {
-            return to >> 3;
-    }
-
-    public final int getToCol() {
+    public final int getDoKolumn() {
             return to % 8;
     }
 }
