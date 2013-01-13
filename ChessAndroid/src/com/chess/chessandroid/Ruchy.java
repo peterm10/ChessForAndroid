@@ -10,7 +10,7 @@ public final class Ruchy<T> extends RuchyPodstawowe implements Sta³eConst, Compa
     }
    
     final char znak;
-    int wynik = 0;
+    public int wynik = 0;
     final int wyroznij, bits;
     
     public Ruchy(int from, int to, int wyroznij, int bits, char znak) {
@@ -59,20 +59,20 @@ public String toString() {
             }
             return sb.toString();
     }
-	@SuppressWarnings("rawtypes")
+	/*@SuppressWarnings("rawtypes")
 	public boolean equals(Object o) {
 		Ruchy m = (Ruchy) o;
     	return (m.from == from && m.to == to && m.wyroznij == wyroznij);
 	}
 	public int hashCode() {
 		return from + (to << 8) + (wyroznij << 16);
-	}
-	int getWynik() {
-		return wynik;
+	}*/
+	public int getWynik() {
+		return this.wynik;
 	}
 	 
 	void setWynik(int i) {
-		wynik = i;
+		this.wynik = i;
 	}
 
 

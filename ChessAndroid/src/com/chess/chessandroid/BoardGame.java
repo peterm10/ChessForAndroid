@@ -48,28 +48,9 @@ public final class BoardGame implements Sta³eConst, Cloneable {
     long oldPawnBits = 0;
     long oldPieceBits = 0;
     int polozenieKrola[] = { 60, 4 };
-    public int color[] =  {
-        1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
-        1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
-        6, 6, 6, 6, 6, 6, 6, 6,
-        6, 6, 6, 6, 6, 6, 6, 6,
-        6, 6, 6, 6, 6, 6, 6, 6,//puste
-        6, 6, 6, 6, 6, 6, 6, 6,
-        0, 0, 0, 0, 0, 0, 0, 0,//pionki bia³e
-        0, 0, 0, 0, 0, 0, 0, 0//pionki bia³e
-};
+    
        
-public int ulozeniePionkow[] =  {
-    3, 1, 2, 4, 5, 2, 1, 3,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    6, 6, 6, 6, 6, 6, 6, 6,
-    6, 6, 6, 6, 6, 6, 6, 6,
-    6, 6, 6, 6, 6, 6, 6, 6,
-    6, 6, 6, 6, 6, 6, 6, 6,
-    0, 0, 0, 0, 0, 0, 0, 0,
-    3, 1, 2, 4, 5, 2, 1, 3
-};
-       
+    
 	
        
     final private static int przesuniecieTab[][] = {
@@ -132,7 +113,36 @@ public int ulozeniePionkow[] =  {
             0,   0,   0, -40, -40,   0,   0,   0,
             0,   0,   0,   0,   0,   0,   0,   0
     };
-
+    private final static int nrSzachownicy[] = {
+        56,  57,  58,  59,  60,  61,  62,  63,
+        48,  49,  50,  51,  52,  53,  54,  55,
+        40,  41,  42,  43,  44,  45,  46,  47,
+        32,  33,  34,  35,  36,  37,  38,  39,
+        24,  25,  26,  27,  28,  29,  30,  31,
+        16,  17,  18,  19,  20,  21,  22,  23,
+        8,   9,  10,  11,  12,  13,  14,  15,
+        0,   1,   2,   3,   4,   5,   6,   7
+    };
+    public int color[] =  {
+            1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
+            1, 1, 1, 1, 1, 1, 1, 1,//pionki czarne
+            6, 6, 6, 6, 6, 6, 6, 6,
+            6, 6, 6, 6, 6, 6, 6, 6,
+            6, 6, 6, 6, 6, 6, 6, 6,//puste
+            6, 6, 6, 6, 6, 6, 6, 6,
+            0, 0, 0, 0, 0, 0, 0, 0,//pionki bia³e
+            0, 0, 0, 0, 0, 0, 0, 0//pionki bia³e
+    };
+    public int ulozeniePionkow[] =  {
+    	    3, 1, 2, 4, 5, 2, 1, 3,
+    	    0, 0, 0, 0, 0, 0, 0, 0,
+    	    6, 6, 6, 6, 6, 6, 6, 6,
+    	    6, 6, 6, 6, 6, 6, 6, 6,
+    	    6, 6, 6, 6, 6, 6, 6, 6,
+    	    6, 6, 6, 6, 6, 6, 6, 6,
+    	    0, 0, 0, 0, 0, 0, 0, 0,
+    	    3, 1, 2, 4, 5, 2, 1, 3
+    	};
     private final static int krolowaPC[] = {
             -10, -10, -10, -10, -10, -10, -10, -10,
             -10,   0,   0,   0,   0,   0,   0, -10,
@@ -163,7 +173,7 @@ public int ulozeniePionkow[] =  {
             -40, -40, -40, -40, -40, -40, -40, -40,
             -40, -40, -40, -40, -40, -40, -40, -40,
             -20, -20, -20, -20, -20, -20, -20, -20,
-            0,  20,  40, -20,   0, -20,  40,  20
+              0,  20,  40, -20,   0, -20,  40,  20
     };
 
     private final static int koncoweRuchyKrolaPC[] = {
@@ -178,16 +188,7 @@ public int ulozeniePionkow[] =  {
     };
 
    
-private final static int nrSzachownicy[] = {
-    56,  57,  58,  59,  60,  61,  62,  63,
-    48,  49,  50,  51,  52,  53,  54,  55,
-    40,  41,  42,  43,  44,  45,  46,  47,
-    32,  33,  34,  35,  36,  37,  38,  39,
-    24,  25,  26,  27,  28,  29,  30,  31,
-    16,  17,  18,  19,  20,  21,  22,  23,
-    8,   9,  10,  11,  12,  13,  14,  15,
-    0,   1,   2,   3,   4,   5,   6,   7
-};
+
 
 public BoardGame() {            
 }
@@ -760,7 +761,7 @@ void cofnijRuch() {
  /* liczbaPowtPoz() zwraca iloœæ obecnych
 pozycja zosta³a powtórzone. Dziêki Janowi Stanback
 do tego sprytnego algorytmu. */    
- int liczbaPowtPoz() {
+ public int liczbaPowtPoz() {
             int b[] = new int[64];
             int c = 0; /*
                                      *liczy  kwadraty, które s¹ ró¿ne od obecny
@@ -949,16 +950,13 @@ do tego sprytnego algorytmu. */
             return r;
     }
 
-    int pozBialegoKrola(int sq) {
+    public int pozBialegoKrola(int sq) {
             int r = krolPC[sq]; 
 
             if (COL(sq) < 3) {
                     r += sprawdzPionkaBialego(1);
                     r += sprawdzPionkaBialego(2);
-                    r += sprawdzPionkaBialego(3) / 2; /*
-                                                              Problemy z pionków na C & f pliki s¹
-                                                              * Nie tak powa¿na
-                                                             */
+                    r += sprawdzPionkaBialego(3) / 2; 
             } else if (COL(sq) > 4) {
                     r += sprawdzPionkaBialego(8);
                     r += sprawdzPionkaBialego(7);
@@ -988,29 +986,31 @@ do tego sprytnego algorytmu. */
 
     /* sprawdzPionkaBialego(f) ocena pionka  */
 
-    int sprawdzPionkaBialego(int f) {
+    public int sprawdzPionkaBialego(int f) {
             int r = 0;
 
-            if (MiejscePionka[BIALE][f] == 6)
-                    ; /* pionek nie ruchomy */
-            else if (MiejscePionka[BIALE][f] == 5)
+            if (MiejscePionka[BIALE][f] == 6){} /* pionek nie ruchomy */
+            else if (MiejscePionka[BIALE][f] == 5){
                     r -= 10; /* pionek przesuno³ sie o jedno pole */
-            else if (MiejscePionka[BIALE][f] != 0)
+            }
+            else if (MiejscePionka[BIALE][f] != 0){
                     r -= 20; /* pionek przesuno³ sie o wiecej pól */
-            else
+            }else{
                     r -= 25; /* to nie pionek */
-
-            if (MiejscePionka[CZARNE][f] == 7)
+            }
+            if (MiejscePionka[CZARNE][f] == 7){
                     r -= 15; /* pionek przeciwnika */
-            else if (MiejscePionka[CZARNE][f] == 5)
-                    r -= 10; /* pionek przeciwnika na 3 losowaniu */
-            else if (MiejscePionka[CZARNE][f] == 4)
-                    r -= 5; /* pionek przeciwnika na 3 losowaniu */
-
+            }
+            else if (MiejscePionka[CZARNE][f] == 5){
+                    r -= 10; /* pionek przeciwnika na 3 polu */
+            }
+            else if (MiejscePionka[CZARNE][f] == 4){
+                    r -= 5; /* pionek przeciwnika na 3 polu */
+            }
             return r;
     }
 
-    int pozCzarnegoKrola(int sq) {
+   public int pozCzarnegoKrola(int sq) {
             int r;
             int i;
 
@@ -1033,25 +1033,25 @@ do tego sprytnego algorytmu. */
             return r;
     }
 
-    int sprawdzPionkaCzarnego(int f) {
+  public  int sprawdzPionkaCzarnego(int f) {
             int r = 0;
 
-            if (MiejscePionka[CZARNE][f] == 1)
-                    ;
-            else if (MiejscePionka[CZARNE][f] == 2)
+            if (MiejscePionka[CZARNE][f] == 1){}
+            else if (MiejscePionka[CZARNE][f] == 2){
                     r -= 10;
-            else if (MiejscePionka[CZARNE][f] != 7)
+            }
+            else if (MiejscePionka[CZARNE][f] != 7){
                     r -= 20;
-            else
+            }else{
                     r -= 25;
-
-            if (MiejscePionka[BIALE][f] == 0)
+            }
+            if (MiejscePionka[BIALE][f] == 0){
                     r -= 15;
-            else if (MiejscePionka[BIALE][f] == 2)
+            }else if (MiejscePionka[BIALE][f] == 2){
                     r -= 10;
-            else if (MiejscePionka[BIALE][f] == 3)
+            }else if (MiejscePionka[BIALE][f] == 3){
                     r -= 5;
-
+            }
             return r;
     }  
    

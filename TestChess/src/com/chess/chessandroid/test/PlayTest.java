@@ -2,11 +2,11 @@ package com.chess.chessandroid.test;
 
 import junit.framework.Assert;
 
-import com.chess.chessandroid.Board;
+import com.chess.chessandroid.BoardGame;
 import com.chess.chessandroid.R;
-import com.chess.chessandroid.ChessBoard;
+import com.chess.chessandroid.BoardGameChess;
 import com.chess.chessandroid.MainActivity;
-import com.chess.chessandroid.Search;
+import com.chess.chessandroid.PrzeszukajPlansze;
 import com.jayway.android.robotium.solo.Solo;
 
 import android.graphics.drawable.Drawable;
@@ -16,11 +16,11 @@ import android.widget.LinearLayout;
 
 public class PlayTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	private MainActivity mActivity = new MainActivity();
-	private Board board;
-	private ChessBoard chessView;
+	private BoardGame board;
+	private BoardGameChess chessView;
 	private Solo solo;
 	private static Drawable[][] pieceImage = new Drawable[2][6];
-	private Search searcher = new Search();
+	private PrzeszukajPlansze searcher = new PrzeszukajPlansze();
 	
 	public PlayTest(){
 		super("com.chess.chessandroid",MainActivity.class);
@@ -28,8 +28,8 @@ public class PlayTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected void setUp() throws Exception{
 		super.setUp();
 		solo = new Solo(getInstrumentation(),getActivity());
-		searcher = new Search();
-        board = new Board();
+		searcher = new PrzeszukajPlansze();
+        board = new BoardGame();
         
         
 	}

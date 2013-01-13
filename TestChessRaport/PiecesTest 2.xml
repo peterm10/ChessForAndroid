@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PiecesTest" project="TestChess" tests="23" started="23" failures="0" errors="0" ignored="0">
+  <testsuite name="Android [emulator-5554]" time="71.538">
+    <testsuite name="com.chess.chessandroid.test.PiecesTest" time="71.538">
+      <testcase name="testApp " classname="com.chess.chessandroid.test.PiecesTest" time="3.548"/>
+      <testcase name="testAttack " classname="com.chess.chessandroid.test.PiecesTest" time="2.922"/>
+      <testcase name="testCol " classname="com.chess.chessandroid.test.PiecesTest" time="3.177"/>
+      <testcase name="testGetWynik " classname="com.chess.chessandroid.test.PiecesTest" time="3.151"/>
+      <testcase name="testInit " classname="com.chess.chessandroid.test.PiecesTest" time="2.702"/>
+      <testcase name="testPawnBlack " classname="com.chess.chessandroid.test.PiecesTest" time="2.678"/>
+      <testcase name="testPawnWhite " classname="com.chess.chessandroid.test.PiecesTest" time="2.463"/>
+      <testcase name="testPieces " classname="com.chess.chessandroid.test.PiecesTest" time="2.681"/>
+      <testcase name="testPobiezNrPola " classname="com.chess.chessandroid.test.PiecesTest" time="3.112"/>
+      <testcase name="testPozCzarnegoKrola " classname="com.chess.chessandroid.test.PiecesTest" time="2.768"/>
+      <testcase name="testPozycjaBialegoKrola " classname="com.chess.chessandroid.test.PiecesTest" time="4.242"/>
+      <testcase name="testROW " classname="com.chess.chessandroid.test.PiecesTest" time="3.153"/>
+      <testcase name="testRuchy " classname="com.chess.chessandroid.test.PiecesTest" time="2.688"/>
+      <testcase name="testRuchy1 " classname="com.chess.chessandroid.test.PiecesTest" time="2.951"/>
+      <testcase name="testRuchy2 " classname="com.chess.chessandroid.test.PiecesTest" time="2.959"/>
+      <testcase name="testRuchyKolumny " classname="com.chess.chessandroid.test.PiecesTest" time="3.006"/>
+      <testcase name="testRuchyWiersze " classname="com.chess.chessandroid.test.PiecesTest" time="3.092"/>
+      <testcase name="testSprawdzPionkaCzarnego " classname="com.chess.chessandroid.test.PiecesTest" time="2.581"/>
+      <testcase name="testSprawdzaniaJestwSzachu " classname="com.chess.chessandroid.test.PiecesTest" time="2.727"/>
+      <testcase name="testSprawdzaniaNIEwSzachu " classname="com.chess.chessandroid.test.PiecesTest" time="3.945"/>
+      <testcase name="testliczbaPowtPoz " classname="com.chess.chessandroid.test.PiecesTest" time="3.129"/>
+      <testcase name="testsprawdzPionkaBialegoa " classname="com.chess.chessandroid.test.PiecesTest" time="3.573"/>
+      <testcase name="testzatrzymajOczekiwanie " classname="com.chess.chessandroid.test.PiecesTest" time="4.29"/>
+    </testsuite>
+  </testsuite>
+</testrun>

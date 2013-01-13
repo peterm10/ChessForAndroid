@@ -213,11 +213,6 @@ public final class PrzeszukajPlansze {
                 return a;
         }
 
-
-       
-
-       
-
         public void sprawdzPoprzednie() throws KoniecSzukaniaWyjatek {
                 
                

@@ -23,7 +23,7 @@ public class MainActivity extends Activity implements Sta³eConst {
     private BoardGameChess chessBoardView;
     private Thread czekajWatek = null;
     @SuppressWarnings("rawtypes")
-	private Ruchy ruchyG = null;
+	public Ruchy ruchyG = null;
     private TextView status;
     private String statusStr = "";
     private String moveStr;

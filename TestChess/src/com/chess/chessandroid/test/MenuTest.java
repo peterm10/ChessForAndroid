@@ -2,11 +2,11 @@ package com.chess.chessandroid.test;
 
 import java.util.Random;
 
-import com.chess.chessandroid.Board;
+import com.chess.chessandroid.BoardGame;
 import com.chess.chessandroid.MainActivity;
 import com.chess.chessandroid.R;
-import com.chess.chessandroid.Search;
-import com.chess.chessandroid.Square;
+import com.chess.chessandroid.PrzeszukajPlansze;
+import com.chess.chessandroid.Plansza;
 import com.jayway.android.robotium.solo.Solo;
 
 
@@ -21,8 +21,8 @@ import junit.framework.TestCase;
 
 public class MenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	private MainActivity mActivity;
-	private Board board;
-	private Search searcher = new Search();
+	private BoardGame board;
+	private PrzeszukajPlansze searcher = new PrzeszukajPlansze();
 	private Solo solo;
 	   
 	public MenuTest(){
@@ -31,8 +31,8 @@ public class MenuTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	protected void setUp() throws Exception{
 		super.setUp();
 		solo = new Solo(getInstrumentation(),getActivity());
-		searcher = new Search();
-        board = new Board();
+		searcher = new PrzeszukajPlansze();
+        board = new BoardGame();
         
         
 	}
