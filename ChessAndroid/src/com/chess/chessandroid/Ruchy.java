@@ -2,12 +2,7 @@ package com.chess.chessandroid;
 
 public final class Ruchy<T> extends RuchyPodstawowe implements Sta³eConst, Comparable<T> {
 
-    @SuppressWarnings("rawtypes")
-	public int compareTo(T arg0) {
-            Ruchy m = (Ruchy) arg0;
-            int mScore = m.getWynik();
-            return mScore - wynik; 
-    }
+    
    
     final char znak;
     public int wynik = 0;
@@ -20,7 +15,12 @@ public final class Ruchy<T> extends RuchyPodstawowe implements Sta³eConst, Compa
             this.znak = znak;
     }
 
-       
+      @SuppressWarnings("rawtypes")
+	public int compareTo(T arg0) {
+            Ruchy m = (Ruchy) arg0;
+            int mScore = m.getWynik();
+            return mScore - wynik; 
+    } 
 public String toString() {
             char c;
             StringBuffer sb = new StringBuffer();

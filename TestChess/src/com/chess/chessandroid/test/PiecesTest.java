@@ -20,7 +20,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 
 public class PiecesTest extends ActivityInstrumentationTestCase2<MainActivity> {
-	private MainActivity mActivity;
+	private MainActivity mActivity,mActivity1;
 	private BoardGame board;
 	private BoardGameChess chessViewTest;
 	private Ruchy<?> mov=null;
@@ -35,11 +35,14 @@ public class PiecesTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	public PiecesTest(){
 		super("com.chess.chessandroid",MainActivity.class);
 	}
+	
 	protected void setUp() throws Exception{
 		super.setUp();
 		solo = new Solo(getInstrumentation(),getActivity());
 		searcher = new PrzeszukajPlansze();
         board = new BoardGame();
+        mActivity1 = getActivity();
+		
         
         
 	}
@@ -402,20 +405,37 @@ public void testRuchyKolumny(){
 		board = new BoardGame();
 		assertEquals(false, board.sprawdzAtak(0));
 	}
-	public void testSprawdzaniaJestwSzachu(){
+	public void testAttackWieza(){
 		mActivity = getActivity();
 		assertNotNull(mActivity);
-		int side = 1;
 		board = new BoardGame();
-		//assertEquals(true, board.inCheck(side));
+		assertEquals(false, board.attack(Sta쿮Const.H8, board.czarny));
+		assertEquals(false, board.attack(Sta쿮Const.H1, board.bialy));
 	}
-	public void testAttack(){
+	public void testAttackSkoczek(){
 		mActivity = getActivity();
 		assertNotNull(mActivity);
-		int side = 1;
 		board = new BoardGame();
-		//atakowany na czarnym polu F1
-		assertEquals(false, board.attack(61, 1));
+		assertEquals(true, board.attack(Sta쿮Const.G8, board.czarny));
+		assertEquals(true, board.attack(Sta쿮Const.G1, board.bialy));
+	}
+	public void testAttackGoniec(){
+		mActivity = getActivity();
+		assertNotNull(mActivity);
+		board = new BoardGame();
+		assertEquals(true, board.attack(Sta쿮Const.F8, board.czarny));
+		assertEquals(true, board.attack(Sta쿮Const.F1, board.bialy));
+	}
+	
+	public void testWykonajRuch(){
+		mActivity = getActivity();
+		assertNotNull(mActivity);
+		board = new BoardGame();
+		mov= new Ruchy(1, 1, 0, 16, board.znakPionka[board.ulozeniePionkow[1]]);
+		assertEquals(true, board.wykonajRuch(mov));
+		mov= new Ruchy(Sta쿮Const.A2, Sta쿮Const.A4, 0, 32, board.znakPionka[board.ulozeniePionkow[0]]);
+		assertEquals(true, board.wykonajRuch(mov));
+		
 	}
 	
 

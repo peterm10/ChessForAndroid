@@ -31,7 +31,7 @@ public final class BoardGame implements Sta³eConst, Cloneable {
     final static int ROOKOPENFILE15 = 15;
     final static int ROOKONSEVENTH20 = 20;
     
-    final private static char znakPionka[] = { 'P', 'N', 'B', 'R', 'Q', 'K' };
+    public final static char znakPionka[] = { 'P', 'N', 'B', 'R', 'Q', 'K' };//pionek,skoczek ,goniec ,wieza,krolowa,krol
     final private static boolean przesun[] = { false, false, true, true, true, false };
     final private static int przesuniecie[] = { 0, 8, 4, 4, 8, 8 };
     final private static int wartosci[] = {100, 300, 300, 500, 900, 0};
