@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements Sta³eConst {
     @SuppressWarnings("rawtypes")
 	private Ruchy prawidlowyRuch = null;
     
-    private int maxCzasCzekania = 5000;
+    private int maxCzasCzekania = 1000;
     private int czarnyPC = CZARNE;
     
     private boolean bialyPrzesunienty = true;
@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements Sta³eConst {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         chessGameStart();
-        newGame();
+       // newGame();
     }
     @SuppressWarnings("static-access")
 	@Override
@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements Sta³eConst {
             switch (item.getItemId()) {
             case MENUNEW:
             	chessGameStart();
-            	newGame();
+            	//newGame();
                     return true;
             case MENUNEXT:
                //     nextMove();
@@ -77,14 +77,14 @@ public class MainActivity extends Activity implements Sta³eConst {
         status = chessBoardView.status;
     }
     public void newGame() {
-            stop();
+    	stopGame();
             czarnyPC = CZARNE;
             ruchyG = null;
             szukaj = new PrzeszukajPlansze();
             board = new BoardGame();
             chessBoardView.ladujPlansze();
     }
-    public void stop() {
+    public void stopGame() {
     	szukaj.koniecOczekiwania();
     }
     //private void nextMove() {}
@@ -113,7 +113,7 @@ public class MainActivity extends Activity implements Sta³eConst {
                 }
         }
         if (!znajdz || !board.wykonajRuch(m)) {
-        	pokazStatus("Nie mo¿na wykonaæ ruchu!");
+        	pokazStatus("Z³y ruch. Wykonaj prawid³owy ruch!");
                 chessBoardView.setPodswietlenie(mo.getOdWier(), mo.getOdKolumn(), false);
                 chessBoardView.setPrzesun(false);
         } else {
@@ -239,13 +239,13 @@ public class MainActivity extends Activity implements Sta³eConst {
                                         new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog,
                                                                 int whichButton) {
-                                                	newGame();
+                                                	//newGame();
                                                 }
                                         }).setNegativeButton("Nie",
                                         new DialogInterface.OnClickListener() {
                                                 public void onClick(DialogInterface dialog,
                                                                 int whichButton) {
-                                                        // Put your code in here for a negative response
+                                                        
                                                 }
                                         });
         alert1.show();
